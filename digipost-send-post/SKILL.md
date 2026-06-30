@@ -34,11 +34,25 @@ So "sending a document" = build one message (recipient + document metadata) → 
 
 Sending multiple files is *not* a separate mechanism — it is just the same message with one `primary-document` plus one `attachment` per extra file. (See `reference/request-anatomy.md`.)
 
+## Security and compliance fields (required)
+
+The `authentication-level` and `sensitivity-level` fields on each document are **not optional defaults** — they are security properties that affect how the recipient accesses the document. **Always set these explicitly; do not rely on library defaults:**
+
+- **`authentication-level`**: Controls how strongly the recipient must authenticate to read the document. Common values:
+  - `PASSWORD` — sufficient for general correspondence; lowest security.
+  - `TWO_FACTOR` — for documents with financial or personal information (invoices, statements, health records). Recommended for any business-to-consumer document from a regulated industry.
+  - `BANKID` or equivalent — for highly sensitive documents (contracts, legal documents).
+
+- **`sensitivity-level`**: Indicates the content's sensitivity for audit and compliance purposes. Guides recipient notification and storage behavior.
+  - Consult the official docs for enum values and usage patterns relevant to your industry.
+
+**Default or missing values are a compliance risk.** Choose values appropriate for the content type and sender's regulatory obligations — a bank sending invoices should use at least `TWO_FACTOR` authentication.
+
 ## The flow, end to end
 
 1. **Decide delivery target.** Digital mail goes to a Digipost user; if the recipient is not a user, sending can fall back to physical mail (print) *if* your account is approved for it. See `reference/physical-mail-and-fallback.md`.
 2. **(Optional) Identify the recipient** ahead of time with `POST /identification` to learn whether they are a Digipost user. See `reference/recipient-identification.md`.
-3. **Build the message XML** — recipient + `primary-document` (+ `attachment`s). See `reference/request-anatomy.md`.
+3. **Build the message XML** — recipient + `primary-document` (+ `attachment`s). Set `authentication-level` and `sensitivity-level` on each document (see section above). See `reference/request-anatomy.md`.
 4. **Assemble the multipart request** — the message XML as the first part, then one content part per document, each `filename` = the document's UUID.
 5. **Add the security headers and sign the request.** This is the other big snag area. See `reference/signing-and-auth.md`.
 6. **POST to `/messages`** (test or production endpoint — see below) and **read the response**: a `message-delivery` with a `status`, or an error. See `reference/errors-and-status.md`.
@@ -52,16 +66,20 @@ Test environment details: https://digipost.github.io/digipost-technical-docs/pro
 
 ## Common snags
 
-| Symptom | Likely cause | Where to look |
-| --- | --- | --- |
-| "What do I send — a message or a file?" | Treating message and file as separate calls | Mental model above; `reference/request-anatomy.md` |
-| `messages` vs `/messages` confusion | Wrong path / base URL; test vs prod host | `reference/request-anatomy.md` |
-| 400 Bad Request | Missing header, SHA256 mismatch, bad date, blank subject, reused message-id, unsupported file type, XML fails XSD | `reference/errors-and-status.md` |
-| 403 Forbidden / "No certificate found" | Certificate not uploaded, wrong cert, or signature string built incorrectly | `reference/signing-and-auth.md` |
-| 404 on send | Recipient is not a Digipost user (and no physical fallback) | `reference/recipient-identification.md`, `reference/physical-mail-and-fallback.md` |
-| æøå garbled | Body not encoded as UTF-8 | `reference/request-anatomy.md` |
-| Which ID goes where? | `X-Digipost-UserId` is the **sender id**, not the organisation number | `reference/signing-and-auth.md` |
-| `Content-Type` for the request "not in docs" | It's a *multipart* type with a boundary, and each part has its own headers | `reference/request-anatomy.md` |
+| Symptom | Likely cause | Where to look                                                                                                                                        |
+| --- | --- |------------------------------------------------------------------------------------------------------------------------------------------------------|
+| "What do I send — a message or a file?" | Treating message and file as separate calls | Mental model above; `reference/request-anatomy.md`                                                                                                   |
+| `messages` vs `/messages` confusion | Wrong path / base URL; test vs prod host | `reference/request-anatomy.md`                                                                                                                       |
+| 400 Bad Request | Missing header, SHA256 mismatch, bad date, blank subject, reused message-id, unsupported file type, XML fails XSD | `reference/errors-and-status.md`                                                                                                                     |
+| 403 Forbidden / "No certificate found" | Certificate not uploaded, wrong cert, or signature string built incorrectly | `reference/signing-and-auth.md`                                                                                                                      |
+| 404 on send | Recipient is not a Digipost user (and no physical fallback) | `reference/recipient-identification.md`, `reference/physical-mail-and-fallback.md`                                                                   |
+| æøå garbled | Body not encoded as UTF-8 | `reference/request-anatomy.md`                                                                                                                       |
+| Which ID goes where? | `X-Digipost-UserId` is the **sender id**, not the organisation number | `reference/signing-and-auth.md`                                                                                                                      |
+| `Content-Type` for the request "not in docs" | It's a *multipart* type with a boundary, and each part has its own headers | `reference/request-anatomy.md`                                                                                                                       |
+| No authentication-level or sensitivity-level set | Relying on library defaults instead of making explicit security policy choices | "Security and compliance fields" section above.                                                                                                      |
+| Matching inbox senders by display name string | Display names are user-editable and not unique; correlating messages by display name is unreliable and will break with user edits or duplicates | **Do not implement display-name-based correlation.** Reference the official inbox API schema for the documented sender correlation fields.           |
+| Storing inbox document without checking content type | Raw content may not be PDF; validation and type handling are developer responsibility | **Always validate `Content-Type` and `file-type` before storing.** Do not assume PDF or any specific format.                                         |
+| Auto-deleting inbox messages with unidentified senders | Ambiguity in identifying a sender is not a reason to destroy data | **Never auto-delete messages.** Flag unidentified senders for review; let the user decide action. This is especially critical in production systems. |
 
 ## Out of scope
 
