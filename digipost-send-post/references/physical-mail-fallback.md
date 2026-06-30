@@ -13,12 +13,12 @@ Two recurring developer needs:
 
 Both depend on the account being **approved for physical print**. A well-formed send can still be rejected with a
 permission error (e.g. *not approved for direct print*) — that is a provisioning matter to resolve with Digipost, not a
-code fix. See `errors-and-status.md`.
+code fix. See the shared `../../references/response-codes.md` ("provisioning vs. code").
 
 ## What stays the same vs. what changes
 
 - **Same flow shape:** you still build a message with a `primary-document` (+ attachments) and POST it to `/messages`
-  signed. The conceptual model in `SKILL.md` does not change.
+  signed. The conceptual model in `../SKILL.md` does not change.
 - **What changes** is the recipient/print configuration in the message and the document formatting requirements for
   print. The exact elements, envelope sizes (C4/C5), and PDF constraints are in the physical-mail docs and the
   [PDF format](https://digipost.github.io/digipost-technical-docs/other/pdf-format.md) page — defer there for the

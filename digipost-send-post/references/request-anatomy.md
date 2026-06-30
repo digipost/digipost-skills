@@ -73,13 +73,12 @@ something else (e.g. ISO-8859-1) or a mismatched `encoding` declaration. Ensure 
 ## Endpoint and path
 
 - Resource path is `/messages` (POST). When building the request or the string-to-sign, use the path exactly — the
-  leading slash matters for signing (see `signing-and-auth.md`).
-- The **base host differs between test and production**. Use the test host until the flow works, then switch. Confirm
-  current hostnames in the [test environment docs](https://digipost.github.io/digipost-technical-docs/process/test-environment.md).
+  leading slash matters for signing (see the shared `../../references/signing-and-auth.md`).
+- The **base host differs between test and production** — use the test host until the flow works, then switch. See
+  `../../references/conventions.md`.
 
 ## Strong recommendation: use a client library
 
-The [Java](https://github.com/digipost/digipost-api-client-java) and [.NET](https://github.com/digipost/digipost-api-client-dotnet) client libraries assemble the multipart body,
-set the part headers, compute the content hash, and sign the request for you. Direct integration means reimplementing
-all of that correctly — which is where most send-time errors originate. Recommend the library first; reserve direct
-integration for cases where it is genuinely required.
+A client library assembles the multipart body, sets the part headers, computes the content hash, and signs the request
+for you — which is where most send-time errors originate. Recommend it first; reserve direct integration for cases where
+it is genuinely required. See `../../references/conventions.md`.
