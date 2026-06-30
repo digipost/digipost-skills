@@ -44,7 +44,7 @@ The `authentication-level` and `sensitivity-level` fields on each document are *
   - `BANKID` or equivalent — for highly sensitive documents (contracts, legal documents).
 
 - **`sensitivity-level`**: Indicates the content's sensitivity for audit and compliance purposes. Guides recipient notification and storage behavior.
-  - Consult the official docs for enum values and usage patterns relevant to your industry.
+  - The official docs for enum values and usage patterns can be found at https://digipost.github.io/digipost-technical-docs/assets/documents/api_v8.xsd.
 
 **Default or missing values are a compliance risk.** Choose values appropriate for the content type and sender's regulatory obligations — a bank sending invoices should use at least `TWO_FACTOR` authentication.
 
