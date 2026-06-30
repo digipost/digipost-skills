@@ -79,7 +79,7 @@ something else (e.g. ISO-8859-1) or a mismatched `encoding` declaration. Ensure 
 
 ## Strong recommendation: use a client library
 
-The [Java](https://github.com/digipost/digipost-api-client-java) and .NET client libraries assemble the multipart body,
+The [Java](https://github.com/digipost/digipost-api-client-java) and [.NET](https://github.com/digipost/digipost-api-client-dotnet) client libraries assemble the multipart body,
 set the part headers, compute the content hash, and sign the request for you. Direct integration means reimplementing
 all of that correctly — which is where most send-time errors originate. Recommend the library first; reserve direct
 integration for cases where it is genuinely required.

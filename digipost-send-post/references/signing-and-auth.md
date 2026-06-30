@@ -4,7 +4,7 @@ This is the highest-friction part of a direct integration. Authoritative spec:
 [Security in the Digipost API](https://digipost.github.io/digipost-technical-docs/API/security.md) and
 [HTTP Headers](https://digipost.github.io/digipost-technical-docs/api-spec/header.md).
 
-> If the developer can use the [Java](https://github.com/digipost/digipost-api-client-java) or .NET client library,
+> If the developer can use the [Java](https://github.com/digipost/digipost-api-client-java) or [.NET](https://github.com/digipost/digipost-api-client-dotnet) client library,
 > recommend it: the library does all of the signing below correctly. The rest of this page matters mainly for direct
 > integrators and for diagnosing 403s.
 
