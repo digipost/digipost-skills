@@ -38,15 +38,10 @@ matching behaviour from memory, since this touches correctness and privacy.
 
 ## Sender id vs. organisation number (frequent confusion)
 
-These are different identifiers and are easy to mix up:
-
-- The **sender id** is your Digipost account id, found at digipost.no/bedrift. It is what goes in the
-  `X-Digipost-UserId` header (see `signing-and-auth.md`) and appears as `sender-id` in delivery responses.
-- The **organisation number** is your company's national org. number — used during onboarding/registration, **not** as
-  the API sender identifier.
-
-When a developer asks "which ID do I put here", the API header wants the **sender id**.
+Don't confuse the identifier that addresses the *recipient* (fødselsnummer / Digipost address / name+address, above)
+with the identifier that authenticates *you* the sender. The API header wants your **sender id**, not your organisation
+number — full explanation in `../../references/conventions.md`.
 
 ## If the recipient is not a Digipost user
 
-A send to a non-user returns **404** unless physical-mail fallback applies. See `physical-mail-and-fallback.md`.
+A send to a non-user returns **404** unless physical-mail fallback applies. See `physical-mail-fallback.md`.
