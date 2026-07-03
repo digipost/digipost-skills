@@ -42,4 +42,6 @@ these skills are designed to ship **together from this repo** rather than be cop
   downloading content, and deleting after retrieval. (Not a way to read an end-user's personal mailbox — see that
   skill's `references/scope-and-boundaries.md`.)
 
-Further flows (e.g. *Digipost Control*) can be added as sibling directories following the same pattern.
+Further flows (e.g. _Digipost Control_) can be added as sibling directories following the same pattern.
+
+## TEST SUBMODULES
