@@ -2,16 +2,19 @@
 name: digipost-send-post
 description: >-
   Use when helping a developer send a document (digital mail / letter) to a
-  recipient through the Digipost API. Covers the conceptual model of a
-  "sending", how to identify a recipient, how to assemble the multipart send
-  request, the required security headers and request signing, and how to read
-  the delivery response and send-time errors. Defers exact field lists and schema to the
-  official Digipost technical documentation.
+  recipient through the Digipost API, or use Digipost Control to request
+  documents back from a user (e.g. asking for a police certificate). Covers the
+  conceptual model of a "sending", how to identify a recipient, how to assemble
+  the multipart send request, the required security headers and request signing,
+  how to read the delivery response and send-time errors, and the Digipost
+  Control lifecycle (send a ShareDocumentsRequest, discover shared documents,
+  read state, fetch content, stop sharing). Defers exact field lists and schema
+  to the official Digipost technical documentation.
 ---
 
 # Digipost — Send a Document
 
-This skill helps you (an AI agent) guide a developer through **sending a document to a recipient** via the Digipost API. It is one *flow* in a larger Digipost integration; sibling flows (e.g. *manage inbox*, *Digipost Control*) are out of scope here.
+This skill helps you (an AI agent) guide a developer through **sending a document to a recipient** via the Digipost API — and through **Digipost Control**, which uses the *same send machinery* to request documents *back* from a user. It is one *flow* in a larger Digipost integration; the sibling *manage inbox* flow is out of scope here.
 
 The skill's job is to give the **correct mental model and the shape of the flow**, then point to the canonical docs for exact fields. Do not invent field names or values — when a specific schema detail is needed, link the developer to the relevant doc page listed below.
 
@@ -61,6 +64,22 @@ The `authentication-level` and `sensitivity-level` fields on each document are *
 
 Test and production are **different hosts**. Point at the test environment until sending works end to end, then switch; confirm current hostnames in the docs rather than hardcoding from memory. A production account is enabled separately (by emailing Digipost support) after test integration works. See `../references/conventions.md` and the [test environment docs](https://digipost.github.io/digipost-technical-docs/process/test-environment.md).
 
+## Digipost Control — requesting documents *from* a user
+
+Digipost Control flips the direction: instead of sending a document to someone, you ask them to **share documents back with you** — the canonical case is requesting a police certificate (*politiattest*) before someone takes on a role. The user sees your stated purpose and decides whether to share; the share is time-limited.
+
+The reason this belongs in the *send* skill: **sending the request is a normal send.** It is the same `POST /messages`, the same multipart assembly, and the same signing described above — the only new thing in the message is a `share-documents-request` data-type on the `primary-document` (carrying a `purpose` and a `max-share-duration-seconds`). Everything you know about building and signing a send applies unchanged.
+
+What *is* new is the read-back half. The full lifecycle:
+
+1. **Send the ShareDocumentsRequest** — `POST /messages` with the `share-documents-request` on the primary document.
+2. **The user shares (or not)** — asynchronous, on their initiative, in Digipost. You cannot force or assume it.
+3. **Discover a share** — poll `GET /documents/events` for a `SHARE_DOCUMENTS_REQUEST_DOCUMENTS_SHARED` event.
+4. **Read state** — `GET /{sender-id}/share-documents-requests/uuid/{uuid}` to list shared documents, their expiry, and HATEOAS links.
+5. **Fetch content before it expires, then stop sharing** — follow the `rel` links; respect `expiry-time`; use `stop_sharing` when done.
+
+Two principles worth stating up front: the request is still a real message with a **PDF covering letter** (the short `purpose` field is the consent prompt; the PDF carries the fuller explanation — both are read by the user), and access is **time-boxed** — a shared document is not a permanent copy. The Java/.NET client libraries have first-class support for the whole lifecycle. See `references/digipost-control.md` for the full flow, the exact XML, event/link names, and the bodiless-GET signing note.
+
 ## Common snags
 
 | Symptom | Likely cause | Where to look |
@@ -74,6 +93,8 @@ Test and production are **different hosts**. Point at the test environment until
 | Which ID goes where? | `X-Digipost-UserId` is the **sender id**, not the organisation number | `../references/conventions.md` |
 | `Content-Type` for the request "not in docs" | It's a *multipart* type with a boundary, and each part has its own headers | `references/request-anatomy.md` |
 | No authentication-level or sensitivity-level set | Relying on library defaults instead of making explicit security policy choices | "Security and compliance fields" section above. |
+| "Sent a Control request but nothing is shared" | Sharing is the user's async action — poll `/documents/events`; it may never come | `references/digipost-control.md` |
+| Control content fetch fails / returns nothing | Share expired (`expiry-time`) or one-time link reused; fetch promptly | `references/digipost-control.md` |
 
 > Reading or managing the organisation's inbox (downloading received documents, sender correlation, deletion, "never auto-delete") is a **different flow** — see the *digipost-manage-inbox* skill.
 
@@ -81,7 +102,6 @@ Test and production are **different hosts**. Point at the test environment until
 
 - Getting an account / certificate issued / test access — manual onboarding via Digipost support: https://digipost.github.io/digipost-technical-docs/index.md
 - Reading a user's inbox or documents — different flow (and note: third-party inbox reading on behalf of users is not offered).
-- Digipost Control (share documents request) — different flow.
 - Pricing and contractual setup — not a technical-docs topic; refer to Digipost sales/support.
 
 ## Canonical documentation
@@ -95,3 +115,4 @@ Test and production are **different hosts**. Point at the test environment until
 - Response codes: https://digipost.github.io/digipost-technical-docs/api-spec/response-codes.md
 - Data types & schema: https://digipost.github.io/digipost-technical-docs/data-types/index.md · https://digipost.github.io/digipost-technical-docs/api/schema.md
 - Physical mail: https://digipost.github.io/digipost-technical-docs/physical-mail/index.md
+- Digipost Control — send request: https://digipost.github.io/digipost-technical-docs/api-spec/control/send.md · discover shared: https://digipost.github.io/digipost-technical-docs/api-spec/control/get-shared.md · get state: https://digipost.github.io/digipost-technical-docs/api-spec/control/get-state.md
