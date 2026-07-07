@@ -40,10 +40,10 @@ Sending to **multiple recipients** is likewise not a separate mechanism: a messa
 
 The `authentication-level` and `sensitivity-level` fields on each document are **not optional defaults** — they are security properties that affect how the recipient accesses the document. **Always set these explicitly; do not rely on library defaults:**
 
-- **`authentication-level`**: Controls how strongly the recipient must authenticate to read the document. Common values:
+- **`authentication-level`**: Controls how strongly the recipient must authenticate to read the document. The values relevant here:
   - `PASSWORD` — sufficient for general correspondence; lowest security.
   - `TWO_FACTOR` — for documents with financial or personal information (invoices, statements, health records). Recommended for any business-to-consumer document from a regulated industry.
-  - `BANKID` or equivalent — for highly sensitive documents (contracts, legal documents).
+  - (The schema also defines `IDPORTEN_3` and `IDPORTEN_4`, but these are reserved for government agencies and outside this skill's core scope — see https://digipost.github.io/digipost-technical-docs/assets/documents/api_v8.xsd.)
 
 - **`sensitivity-level`**: Indicates the content's sensitivity for audit and compliance purposes. Guides recipient notification and storage behavior.
   - The official docs for enum values and usage patterns can be found at https://digipost.github.io/digipost-technical-docs/assets/documents/api_v8.xsd.
@@ -52,7 +52,7 @@ The `authentication-level` and `sensitivity-level` fields on each document are *
 
 ## The flow, end to end
 
-1. **Decide delivery target.** Digital mail goes to a Digipost user; if the recipient is not a user, sending can fall back to physical mail (print) *if* your account is approved for it — falling back is a decision made in your own code (see `references/physical-mail-fallback.md`). Optionally, a separate `POST /identification` can tell you ahead of time whether the recipient is a Digipost user — that is the only question it answers — handy if you are unsure, but not required for either digital or physical sending. See `references/recipient-identification.md`.
+1. **Decide delivery target.** Digital mail goes to a Digipost user; if the recipient is not a user, sending can fall back to physical mail (print) *if* your account is approved for it — falling back is a decision made in your own code (see `references/physical-mail-fallback.md`). A separate `POST /identification` tells you ahead of time whether the recipient is a Digipost user. This is useful if you are unsure whether a person is a Digipost user or not, but is not mandatory to do before sending. See `references/recipient-identification.md`.
 2. **Build the message XML** — recipient + `primary-document` (+ `attachment`s). Set `authentication-level` and `sensitivity-level` on each document (see section above). See `references/request-anatomy.md`.
 3. **Assemble the multipart request** — the message XML as the first part, then one content part per document, each `filename` = the document's UUID.
 4. **Add the security headers and sign the request.** This is the other big snag area. See `../references/signing-and-auth.md` (shared).

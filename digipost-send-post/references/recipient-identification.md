@@ -9,9 +9,9 @@ Digipost user** before sending — that is the only question it answers. It says
 physical mail; whether to fall back to physical mail is a decision your own code makes, with the identification result
 as one possible input. Useful for updating a customer database with Digipost addresses.
 
-Identifying first is **optional in all cases — including sends that fall back to physical mail**. It can still come in
-handy when you are unsure whether a recipient is a Digipost user, so your code can decide whether to send digitally or
-fall back to print (see `physical-mail-fallback.md`).
+Identifying first is **just an option — neither mandatory nor a step you need to add before sending**. Use it if you
+need to check whether a person is a Digipost user; otherwise, simply send. (If a recipient turns out not to be a user,
+see `physical-mail-fallback.md`.)
 
 ## How a recipient can be addressed
 
