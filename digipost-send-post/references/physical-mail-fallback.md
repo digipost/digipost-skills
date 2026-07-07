@@ -24,6 +24,18 @@ code fix. See the shared `../../references/response-codes.md` ("provisioning vs.
   [PDF format](https://digipost.github.io/digipost-technical-docs/other/pdf-format.md) page — defer there for the
   specifics rather than reconstructing them.
 
+## Additional information required for print
+
+To have a letter printed and sent physically you must — **in addition to ordinary recipient identification** — provide:
+
+- the recipient's **name and physical postal address**, and
+- the **physical return address** (returadresse) to use if the letter cannot be delivered by ordinary post.
+
+Both must be complete/valid postal addresses per Norway Post's requirements; they are printed on a cover sheet and
+shown in the envelope window. The exact XML elements live in the
+[physical-mail docs](https://digipost.github.io/digipost-technical-docs/physical-mail/index.md) — defer there rather
+than guessing element names.
+
 ## PDF/print formatting
 
 Documents destined for print have stricter formatting rules (margins, fonts/embedding, page size) than purely digital
