@@ -9,7 +9,9 @@ Authoritative docs: [Physical Mail](https://digipost.github.io/digipost-technica
 print and post**.
 
 If you are unsure whether a recipient is a Digipost user, you can optionally check first with `POST /identification` —
-not required, even for physical post, but it can come in handy (see `recipient-identification.md`).
+not required, even for physical post, but it can come in handy (see `recipient-identification.md`). Note that the
+endpoint only answers whether the person is a Digipost user; deciding to fall back to physical mail happens at code
+level in your own integration.
 
 This depends on the account being **approved for physical print**. A well-formed send can still be rejected with a
 permission error (e.g. *not approved for direct print*) — that is a provisioning matter to resolve with Digipost, not a
