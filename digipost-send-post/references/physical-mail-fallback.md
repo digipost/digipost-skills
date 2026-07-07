@@ -5,13 +5,10 @@ Authoritative docs: [Physical Mail](https://digipost.github.io/digipost-technica
 
 ## When this comes up
 
-Two recurring developer needs:
+**The recipient is not a Digipost user**, but the sender still wants the document delivered → fall back to **physical
+print and post**.
 
-1. **The recipient is not a Digipost user**, but the sender still wants the document delivered → fall back to **physical
-   print and post**.
-2. **The sender always wants to send physically** (e.g. invitations, formal letters), bypassing the digital path.
-
-Both depend on the account being **approved for physical print**. A well-formed send can still be rejected with a
+This depends on the account being **approved for physical print**. A well-formed send can still be rejected with a
 permission error (e.g. *not approved for direct print*) — that is a provisioning matter to resolve with Digipost, not a
 code fix. See the shared `../../references/response-codes.md` ("provisioning vs. code").
 
@@ -35,9 +32,3 @@ page before they generate print PDFs, to avoid rejected documents.
 Developers often ask for an example PDF for physical mail. Check the
 [test environment](https://digipost.github.io/digipost-technical-docs/process/test-environment.md) and physical-mail
 docs for current sample resources rather than fabricating one.
-
-## Avoiding the digital path entirely
-
-If the requirement is "always physical, never check Digipost first", that is a configuration of how the message is
-addressed/forced to print — confirm the supported mechanism in the physical-mail docs. Do not assume a flag name;
-verify it.

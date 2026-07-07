@@ -19,7 +19,7 @@ The skill's job is to give the **correct mental model and the shape of the flow*
 
 1. Read this file to orient on the flow and the mental model.
 2. Load the relevant `references/` file(s) only for the part the developer is stuck on — they are written to be read independently. Files under `references/` are specific to this flow; files under `../references/` (repo root) are shared across all Digipost flows.
-3. For exact request/response schema, defer to the official docs (linked throughout). Always recommend the **Java or .NET client library** unless the developer has a specific reason to integrate directly — the library handles signing, multipart assembly, and hashing, which is where most direct integrators get stuck (see `../references/conventions.md`).
+3. For exact request/response schema, defer to the official docs (linked throughout). Always recommend the **Java or .NET client library** unless the developer has a specific reason to integrate directly — the library handles signing, multipart assembly, and hashing, which is where most direct integrators get stuck (see `../references/conventions.md`). **Be explicit with the developer that Java and .NET are the only official client libraries: in any other language (Python, Go, Node, …) there is no library to lean on, and they must build much of this logic — request signing, security headers, content hashing, multipart assembly — from scratch against the raw API.**
 
 ## The mental model (read this first)
 
@@ -33,6 +33,8 @@ The single most common misunderstanding in support is **what a "sending" actuall
 So "sending a document" = build one message (recipient + document metadata) → attach the file bytes as additional multipart parts keyed by UUID → POST it, signed, to `/messages`.
 
 Sending multiple files is *not* a separate mechanism — it is just the same message with one `primary-document` plus one `attachment` per extra file. (See `references/request-anatomy.md`.)
+
+Sending to **multiple recipients** is likewise not a separate mechanism: a message addresses exactly **one recipient**, so to reach several people you simply loop over them and send one ordinary message per recipient. Give each message its own fresh `message-id` and document UUIDs — reusing a `message-id` across sends is rejected.
 
 ## Security and compliance fields (required)
 
@@ -50,12 +52,11 @@ The `authentication-level` and `sensitivity-level` fields on each document are *
 
 ## The flow, end to end
 
-1. **Decide delivery target.** Digital mail goes to a Digipost user; if the recipient is not a user, sending can fall back to physical mail (print) *if* your account is approved for it. See `references/physical-mail-fallback.md`.
-2. **(Optional) Identify the recipient** ahead of time with `POST /identification` to learn whether they are a Digipost user. See `references/recipient-identification.md`.
-3. **Build the message XML** — recipient + `primary-document` (+ `attachment`s). Set `authentication-level` and `sensitivity-level` on each document (see section above). See `references/request-anatomy.md`.
-4. **Assemble the multipart request** — the message XML as the first part, then one content part per document, each `filename` = the document's UUID.
-5. **Add the security headers and sign the request.** This is the other big snag area. See `../references/signing-and-auth.md` (shared).
-6. **POST to `/messages`** (test or production endpoint — see below) and **read the response**: a `message-delivery` with a `status`, or an error. See `references/errors-and-status.md` and the shared `../references/response-codes.md`.
+1. **Decide delivery target — identify the recipient.** Digital mail goes to a Digipost user; if the recipient is not a user, sending can fall back to physical mail (print) *if* your account is approved for it (see `references/physical-mail-fallback.md`). A separate `POST /identification` tells you ahead of time whether the recipient is a Digipost user. This **should be done whenever physical fallback is in play** — so you know up front whether the send will go to print and can prepare print-quality documents — but it is not required for a plain digital send. See `references/recipient-identification.md`.
+2. **Build the message XML** — recipient + `primary-document` (+ `attachment`s). Set `authentication-level` and `sensitivity-level` on each document (see section above). See `references/request-anatomy.md`.
+3. **Assemble the multipart request** — the message XML as the first part, then one content part per document, each `filename` = the document's UUID.
+4. **Add the security headers and sign the request.** This is the other big snag area. See `../references/signing-and-auth.md` (shared).
+5. **POST to `/messages`** (test or production endpoint — see below) and **read the response**: a `message-delivery` with a `status`, or an error. See `references/errors-and-status.md` and the shared `../references/response-codes.md`.
 
 ## Test vs. production
 
@@ -67,13 +68,12 @@ Test and production are **different hosts**. Point at the test environment until
 | --- | --- | --- |
 | "What do I send — a message or a file?" | Treating message and file as separate calls | Mental model above; `references/request-anatomy.md` |
 | `messages` vs `/messages` confusion | Wrong path / base URL; test vs prod host | `references/request-anatomy.md` |
-| 400 Bad Request | Missing header, SHA256 mismatch, bad date, blank subject, reused message-id, unsupported file type, XML fails XSD | `../references/response-codes.md` |
-| 403 Forbidden / "No certificate found" | Certificate not uploaded, wrong cert, or signature string built incorrectly | `../references/signing-and-auth.md` |
-| 404 on send | Recipient is not a Digipost user (and no physical fallback) | `references/recipient-identification.md`, `references/physical-mail-fallback.md` |
 | æøå garbled | Body not encoded as UTF-8 | `references/request-anatomy.md` |
 | Which ID goes where? | `X-Digipost-UserId` is the **sender id**, not the organisation number | `../references/conventions.md` |
 | `Content-Type` for the request "not in docs" | It's a *multipart* type with a boundary, and each part has its own headers | `references/request-anatomy.md` |
 | No authentication-level or sensitivity-level set | Relying on library defaults instead of making explicit security policy choices | "Security and compliance fields" section above. |
+
+For error HTTP statuses at send time (400, 403, 404, …), see `references/errors-and-status.md`.
 
 > Reading or managing the organisation's inbox (downloading received documents, sender correlation, deletion, "never auto-delete") is a **different flow** — see the *digipost-manage-inbox* skill.
 
