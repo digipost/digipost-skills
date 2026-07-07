@@ -8,10 +8,9 @@ You can send without identifying first, but a separate `POST /identification` le
 Digipost user** before sending — useful for updating a customer database with Digipost addresses, or for deciding
 between digital and physical delivery up front.
 
-Identifying first is **recommended whenever physical-mail fallback is in play**: knowing up front that a recipient is
-not a Digipost user tells you the send will go to print, so you can prepare print-quality documents and handle the
-cost/formatting implications deliberately (see `physical-mail-fallback.md`). For a plain digital send it remains
-optional.
+Identifying first is **optional in all cases — including sends that fall back to physical mail**. It can still come in
+handy when you are unsure whether a recipient is a Digipost user: knowing up front tells you whether the send will go
+digitally or to print (see `physical-mail-fallback.md`).
 
 ## How a recipient can be addressed
 
