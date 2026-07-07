@@ -5,13 +5,15 @@ Authoritative docs: [Physical Mail](https://digipost.github.io/digipost-technica
 
 ## When this comes up
 
-Two recurring developer needs:
+**The recipient is not a Digipost user**, but the sender still wants the document delivered → fall back to **physical
+print and post**.
 
-1. **The recipient is not a Digipost user**, but the sender still wants the document delivered → fall back to **physical
-   print and post**.
-2. **The sender always wants to send physically** (e.g. invitations, formal letters), bypassing the digital path.
+If you are unsure whether a recipient is a Digipost user, you can optionally check first with `POST /identification` —
+not required, even for physical post, but it can come in handy (see `recipient-identification.md`). Note that the
+endpoint only answers whether the person is a Digipost user; deciding to fall back to physical mail happens at code
+level in your own integration.
 
-Both depend on the account being **approved for physical print**. A well-formed send can still be rejected with a
+This depends on the account being **approved for physical print**. A well-formed send can still be rejected with a
 permission error (e.g. *not approved for direct print*) — that is a provisioning matter to resolve with Digipost, not a
 code fix. See the shared `../../references/response-codes.md` ("provisioning vs. code").
 
@@ -24,6 +26,18 @@ code fix. See the shared `../../references/response-codes.md` ("provisioning vs.
   [PDF format](https://digipost.github.io/digipost-technical-docs/other/pdf-format.md) page — defer there for the
   specifics rather than reconstructing them.
 
+## Additional information required for print
+
+To have a letter printed and sent physically you must — **in addition to ordinary recipient identification** — provide:
+
+- the recipient's **name and physical postal address**, and
+- the **physical return address** (returadresse) to use if the letter cannot be delivered by ordinary post.
+
+Both must be complete/valid postal addresses per Norway Post's requirements; they are printed on a cover sheet and
+shown in the envelope window. The exact XML elements live in the
+[physical-mail docs](https://digipost.github.io/digipost-technical-docs/physical-mail/index.md) — defer there rather
+than guessing element names.
+
 ## PDF/print formatting
 
 Documents destined for print have stricter formatting rules (margins, fonts/embedding, page size) than purely digital
@@ -35,9 +49,3 @@ page before they generate print PDFs, to avoid rejected documents.
 Developers often ask for an example PDF for physical mail. Check the
 [test environment](https://digipost.github.io/digipost-technical-docs/process/test-environment.md) and physical-mail
 docs for current sample resources rather than fabricating one.
-
-## Avoiding the digital path entirely
-
-If the requirement is "always physical, never check Digipost first", that is a configuration of how the message is
-addressed/forced to print — confirm the supported mechanism in the physical-mail docs. Do not assume a flag name;
-verify it.

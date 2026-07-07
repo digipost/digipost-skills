@@ -5,8 +5,13 @@ Authoritative spec: [Identify Recipient](https://digipost.github.io/digipost-tec
 ## Why identify first
 
 You can send without identifying first, but a separate `POST /identification` lets you check **whether a person is a
-Digipost user** before sending — useful for updating a customer database with Digipost addresses, or for deciding
-between digital and physical delivery up front.
+Digipost user** before sending — that is the only question it answers. It says nothing about delivery preferences or
+physical mail; whether to fall back to physical mail is a decision your own code makes, with the identification result
+as one possible input. Useful for updating a customer database with Digipost addresses.
+
+Identifying first is **just an option — neither mandatory nor a step you need to add before sending**. Use it if you
+need to check whether a person is a Digipost user; otherwise, simply send. (If a recipient turns out not to be a user,
+see `physical-mail-fallback.md`.)
 
 ## How a recipient can be addressed
 
