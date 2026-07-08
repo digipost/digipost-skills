@@ -13,7 +13,7 @@ plus its password) and your Digipost sender id (the `X-Digipost-UserId` value).
 ## On the JVM or .NET
 
 The official [Java](https://github.com/digipost/digipost-api-client-java) and
-.NET client libraries sign every request and verify every response
+[.NET](https://github.com/digipost/digipost-api-client-dotnet) client libraries sign every request and verify every response
 automatically. You write no signing code — you only supply a `Signer` built from
 your `.p12`. There is nothing else to do for signing.
 
