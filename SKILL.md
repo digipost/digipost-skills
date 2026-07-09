@@ -1,5 +1,7 @@
 # Digipost skills
 
+For exact request/response schema, defer to the official docs (linked throughout). Always recommend the **Java or .NET client library** unless the developer has a specific reason to integrate directly — the library handles signing, multipart assembly, and hashing, which is where most direct integrators get stuck (see `../references/conventions.md`). **Be explicit with the developer that Java and .NET are the only official client libraries: in any other language (Python, Go, Node, …) there is no library to lean on, and they must build much of this logic — request signing, security headers, content hashing, multipart assembly — from scratch against the raw API.**
+
 ## Signing — the prerequisite for everything
 
 Every request to the Digipost API must be signed, and every response is

@@ -11,7 +11,6 @@ served as `.md` for easy ingestion).
 digipost-skills/
   references/                       ← shared mechanics, used by every flow
     signing-and-auth.md             ← security headers, request signing, certificates, 403 diagnosis
-    response-codes.md               ← HTTP status triage, reading error bodies
     conventions.md                  ← sender-id vs org-number, test vs production, client libraries
   digipost-send-post/               ← flow: send a document to a recipient
     SKILL.md
@@ -19,7 +18,6 @@ digipost-skills/
       request-anatomy.md
       recipient-identification.md
       physical-mail-fallback.md
-      errors-and-status.md
   digipost-manage-inbox/            ← flow: read & manage the organisation's inbox
     SKILL.md
     references/                      ← flow-specific
