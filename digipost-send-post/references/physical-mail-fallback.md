@@ -11,9 +11,7 @@ print and post**.
 If you are unsure whether a recipient is a Digipost user, you can check first with `POST /identification` —
 not required, even for physical post, but it can come in handy (see `recipient-identification.md`).
 
-This depends on the account being **approved for physical print**. A well-formed send can still be rejected with a
-permission error (e.g. *not approved for direct print*) — that is a provisioning matter to resolve with Digipost, not a
-code fix. See https://digipost.github.io/digipost-technical-docs/api-spec/response-codes.md ("provisioning vs. code").
+Physical print means Digipost prints your document and sends it as ordinary mail to the recipient's postal address. This will only happen if the user is not a Digipost user.
 
 ## What stays the same vs. what changes
 
