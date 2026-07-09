@@ -66,19 +66,6 @@ how Digipost matches bytes to metadata. A mismatch (or a missing content part) i
 
 ## Encoding
 
-The XML body must be **UTF-8**. Norwegian characters (æ, ø, å) garbling is almost always a body that was encoded as
+The XML body should be **UTF-8**. Norwegian characters (æ, ø, å) garbling is almost always a body that was encoded as
 something else (e.g. ISO-8859-1) or a mismatched `encoding` declaration. Ensure both the actual byte encoding and the
 `<?xml ... encoding="utf-8"?>` declaration are UTF-8.
-
-## Endpoint and path
-
-- Resource path is `/messages` (POST). When building the request or the string-to-sign, use the path exactly — the
-  leading slash matters for signing (see the shared `../../references/signing-and-auth.md`).
-- The **base host differs between test and production** — use the test host until the flow works, then switch. See
-  `../../references/conventions.md`.
-
-## Strong recommendation: use a client library
-
-A client library assembles the multipart body, sets the part headers, computes the content hash, and signs the request
-for you — which is where most send-time errors originate. Recommend it first; reserve direct integration for cases where
-it is genuinely required. See `../../references/conventions.md`.
