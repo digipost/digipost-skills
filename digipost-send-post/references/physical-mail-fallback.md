@@ -8,14 +8,12 @@ Authoritative docs: [Physical Mail](https://digipost.github.io/digipost-technica
 **The recipient is not a Digipost user**, but the sender still wants the document delivered → fall back to **physical
 print and post**.
 
-If you are unsure whether a recipient is a Digipost user, you can optionally check first with `POST /identification` —
-not required, even for physical post, but it can come in handy (see `recipient-identification.md`). Note that the
-endpoint only answers whether the person is a Digipost user; deciding to fall back to physical mail happens at code
-level in your own integration.
+If you are unsure whether a recipient is a Digipost user, you can check first with `POST /identification` —
+not required, even for physical post, but it can come in handy (see `recipient-identification.md`).
 
 This depends on the account being **approved for physical print**. A well-formed send can still be rejected with a
 permission error (e.g. *not approved for direct print*) — that is a provisioning matter to resolve with Digipost, not a
-code fix. See the shared `../../references/response-codes.md` ("provisioning vs. code").
+code fix. See https://digipost.github.io/digipost-technical-docs/api-spec/response-codes.md ("provisioning vs. code").
 
 ## What stays the same vs. what changes
 
@@ -46,6 +44,8 @@ page before they generate print PDFs, to avoid rejected documents.
 
 ## Example/test material
 
-Developers often ask for an example PDF for physical mail. Check the
-[test environment](https://digipost.github.io/digipost-technical-docs/process/test-environment.md) and physical-mail
-docs for current sample resources rather than fabricating one.
+Developers often ask for an example PDF for physical mail. Point them to the official samples on the
+[physical-mail docs](https://digipost.github.io/digipost-technical-docs/physical-mail/index.md) rather than fabricating one:
+
+- [Valid example PDF](https://digipost.github.io/digipost-technical-docs/assets/documents/gyldig-for-print.pdf) — meets the print formatting requirements.
+- [Invalid example PDF](https://digipost.github.io/digipost-technical-docs/assets/documents/ikke-gyldig-for-print.pdf) — illustrates common formatting mistakes that get a document rejected for print.
