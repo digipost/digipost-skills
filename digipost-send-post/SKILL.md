@@ -51,7 +51,7 @@ The `authentication-level` and `sensitivity-level` fields on each document are *
 
 **Default or missing values are a compliance risk.** Choose values appropriate for the content type and sender's regulatory obligations.
 
-## The flow, end to end
+## The flow, end to end 
 
 1. **Decide delivery target.** Digital mail goes to a Digipost user; if the recipient is not a user, sending can fall back to physical mail (print) — falling back is a decision made in your own code (see `references/physical-mail-fallback.md`). A separate `POST /identification` tells you ahead of time whether the recipient is a Digipost user. This is useful if you are unsure whether a person is a Digipost user or not, but is not mandatory to do before sending. See `references/recipient-identification.md`.
 2. **Build the message XML** — recipient + `primary-document` (+ `attachment`s). Set `authentication-level` and `sensitivity-level` on each document (see section above). See `references/request-anatomy.md`.
@@ -84,6 +84,22 @@ For error HTTP statuses at send time (400, 403, 404, …), see https://digipost.
 - Reading a user's inbox or documents — different flow (and note: third-party inbox reading on behalf of users is not offered).
 - Digipost Control (share documents request) — different flow.
 - Pricing and contractual setup — not a technical-docs topic; refer to Digipost sales/support.
+
+## Additional features
+
+Beyond the core send flow above, a few other capabilities exist. The [Java](https://digipost.github.io/digipost-api-client-java/v16.x/) and [.NET](https://digipost.github.io/digipost-api-client-dotnet/v14.0/) client libraries expose builder APIs for all three, which is the easiest path if you're on those stacks. The wire format underneath is still just XML per the schema, though, so developers on other languages can implement these directly against the [schema](https://digipost.github.io/digipost-technical-docs/assets/documents/api_v8.xsd) — pointers below.
+
+### SMS notification
+
+A document can carry an optional `sms-notification` element — a sibling of `authentication-level`/`sensitivity-level` in the document metadata — that schedules an SMS reminder if the message goes unread (additional charges apply). If you're not using a client library, the sub-elements controlling timing live under `sms-notification` in the schema; build that XML directly rather than guessing the structure.
+
+### HTML documents
+
+`file-type` on a document is a free-form string field, not a fixed enum, so an HTML file is set the same way a PDF is — just with a different `file-type` value — subject to its own content/formatting restrictions. Without a client library, set this string directly in the document XML; confirm the exact expected value and HTML-specific constraints in the [Attachments](https://digipost.github.io/digipost-technical-docs/api-spec/attachment.md) doc rather than assuming `"html"`.
+
+### Invoice flow
+
+Invoices are one of the [Digipost data types](https://github.com/digipost/digipost-data-types#invoice) (`Invoice`), attached to a document via the generic `data-type` / `additional-data` extension point. At a high level `Invoice` carries the payment details: due date, amount, creditor account, and an optional KID — but confirm the exact structure against the linked data-types definition rather than assuming these names. Without a client library (which wraps this in a higher-level invoice builder), build the `Invoice` data type directly per that definition and attach it as `additional-data`.
 
 ## Canonical documentation
 
