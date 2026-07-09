@@ -11,7 +11,7 @@ description: >-
 
 # Digipost — Send a Document
 
-This skill helps you (an AI agent) guide a developer through **sending a document to a recipient** via the Digipost API. It is one *flow* in a larger Digipost integration; sibling flows (e.g. *manage inbox*, *Digipost Control*) are out of scope here.
+This skill helps you guide a developer through **sending a document to a recipient** via the Digipost API. It is one *flow* in a larger Digipost integration; sibling flows (e.g. *manage inbox*, *Digipost Control*) are out of scope here.
 
 The skill's job is to give the **correct mental model and the shape of the flow**, then point to the canonical docs for exact fields. Do not invent field names or values — when a specific schema detail is needed, link the developer to the relevant doc page listed below.
 
@@ -19,7 +19,6 @@ The skill's job is to give the **correct mental model and the shape of the flow*
 
 1. Read this file to orient on the flow and the mental model.
 2. Load the relevant `references/` file(s) only for the part the developer is stuck on — they are written to be read independently. Files under `references/` are specific to this flow; files under `../references/` (repo root) are shared across all Digipost flows.
-3. For exact request/response schema, defer to the official docs (linked throughout). Always recommend the **Java or .NET client library** unless the developer has a specific reason to integrate directly — the library handles signing, multipart assembly, and hashing, which is where most direct integrators get stuck (see `../references/conventions.md`). **Be explicit with the developer that Java and .NET are the only official client libraries: in any other language (Python, Go, Node, …) there is no library to lean on, and they must build much of this logic — request signing, security headers, content hashing, multipart assembly — from scratch against the raw API.**
 
 ## The mental model (read this first)
 
@@ -45,10 +44,12 @@ The `authentication-level` and `sensitivity-level` fields on each document are *
   - `TWO_FACTOR` — for documents with financial or personal information (invoices, statements, health records). Recommended for any business-to-consumer document from a regulated industry.
   - (The schema also defines `IDPORTEN_3` and `IDPORTEN_4`, but these are reserved for government agencies and outside this skill's core scope — see https://digipost.github.io/digipost-technical-docs/assets/documents/api_v8.xsd.)
 
-- **`sensitivity-level`**: Indicates the content's sensitivity for audit and compliance purposes. Guides recipient notification and storage behavior.
-  - The official docs for enum values and usage patterns can be found at https://digipost.github.io/digipost-technical-docs/assets/documents/api_v8.xsd.
+- **`sensitivity-level`**: Controls whether the document's metadata (e.g. subject) is revealed in recipient notifications, or hidden until the recipient authenticates. The values:
+  - `NORMAL` — default. Metadata such as the subject is revealed in user notifications (email, SMS) and visible even when logged in at a security level below the one set for the message.
+  - `SENSITIVE` — metadata such as the subject is hidden until the recipient logs in at the authentication level set for the message.
+  - (See https://digipost.github.io/digipost-technical-docs/assets/documents/api_v8.xsd for the authoritative schema definition.)
 
-**Default or missing values are a compliance risk.** Choose values appropriate for the content type and sender's regulatory obligations — a bank sending invoices should use at least `TWO_FACTOR` authentication.
+**Default or missing values are a compliance risk.** Choose values appropriate for the content type and sender's regulatory obligations.
 
 ## The flow, end to end
 
@@ -56,7 +57,7 @@ The `authentication-level` and `sensitivity-level` fields on each document are *
 2. **Build the message XML** — recipient + `primary-document` (+ `attachment`s). Set `authentication-level` and `sensitivity-level` on each document (see section above). See `references/request-anatomy.md`.
 3. **Assemble the multipart request** — the message XML as the first part, then one content part per document, each `filename` = the document's UUID.
 4. **Add the security headers and sign the request.** This is the other big snag area. See `../references/signing-and-auth.md` (shared).
-5. **POST to `/messages`** (test or production endpoint — see below) and **read the response**: a `message-delivery` with a `status`, or an error. See `references/errors-and-status.md` and the shared `../references/response-codes.md`.
+5. **POST to `/messages`** (test or production endpoint — see below) and **read the response**: a `message-delivery` with a `status`, or an error. See https://digipost.github.io/digipost-technical-docs/api-spec/response-codes.md.
 
 ## Test vs. production
 
@@ -73,7 +74,7 @@ Test and production are **different hosts**. Point at the test environment until
 | `Content-Type` for the request "not in docs" | It's a *multipart* type with a boundary, and each part has its own headers | `references/request-anatomy.md` |
 | No authentication-level or sensitivity-level set | Relying on library defaults instead of making explicit security policy choices | "Security and compliance fields" section above. |
 
-For error HTTP statuses at send time (400, 403, 404, …), see `references/errors-and-status.md`.
+For error HTTP statuses at send time (400, 403, 404, …), see https://digipost.github.io/digipost-technical-docs/api-spec/response-codes.md.
 
 > Reading or managing the organisation's inbox (downloading received documents, sender correlation, deletion, "never auto-delete") is a **different flow** — see the *digipost-manage-inbox* skill.
 
