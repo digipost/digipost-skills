@@ -5,9 +5,12 @@ Authoritative spec: [Identify Recipient](https://digipost.github.io/digipost-tec
 ## Why identify first
 
 You can send without identifying first, but a separate `POST /identification` lets you check **whether a person is a
-Digipost user** before sending — that is the only question it answers. It says nothing about delivery preferences or
+Digipost user** before sending. It says nothing about delivery preferences or
 physical mail; whether to fall back to physical mail is a decision your own code makes, with the identification result
 as one possible input. Useful for updating a customer database with Digipost addresses.
+
+It is also useful when you only have loosely-identifying personalia (e.g. name + street address) and want to confirm
+that data resolves to exactly one recipient before you send.
 
 Identifying first is **just an option — neither mandatory nor a step you need to add before sending**. Use it if you
 need to check whether a person is a Digipost user; otherwise, simply send. (If a recipient turns out not to be a user,
@@ -37,9 +40,10 @@ You can rely on the returned Digipost user being the same person specified in th
 
 ## On secure identification by address + birth date
 
-Some integrators ask how a recipient is *securely* matched (e.g. by name/address or by fødselsnummer). The matching
-rules and what each identifier guarantees live in the spec and schema — point developers there rather than describing
-matching behaviour from memory, since this touches correctness and privacy.
+Some integrators ask how a recipient is *securely* matched (e.g. by name/address or by fødselsnummer) — that is, which
+identifiers Digipost accepts as proof of identity, and how strong a match each one guarantees. Don't answer from
+memory: point developers to the spec and schema for the exact rules, since getting this wrong risks misdelivery and
+privacy exposure.
 
 ## Sender id vs. organisation number (frequent confusion)
 
