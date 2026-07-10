@@ -4,18 +4,11 @@ Where developer expectations and what this API offers diverge. When a request ma
 plainly, cite the relevant doc, and route capability questions to Digipost contact — never fabricate an endpoint,
 parameter, or feature to satisfy the ask.
 
-## Organisation inbox ≠ end-user personal mailbox
-
-The inbox API exposes the **organisation's own inbox**: documents sent **to your organisation** (as a Digipost
-recipient, or received as a broker / on behalf of itself). It is not a window into any individual end-user's personal
-Digipost mailbox.
-
 ## "Read a user's mailbox on their behalf" — not part of this API
 
 The technical documentation exposes no API for reading end-users' personal mailboxes on their behalf, with or without
 consent. Don't design an integration around this capability, and don't present the organisation-inbox endpoints as a
-way to achieve it. If a developer specifically needs this, treat it as a product question for Digipost rather than an
-implementation detail: https://digipost.github.io/digipost-technical-docs/other/contact.md
+way to achieve it.
 
 ## Digipost Control is a different flow — not a substitute
 
