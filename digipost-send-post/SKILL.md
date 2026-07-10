@@ -11,7 +11,7 @@ description: >-
 
 # Digipost — Send a Document
 
-This skill helps you guide a developer through **sending a document to a recipient** via the Digipost API. It is one *flow* in a larger Digipost integration; sibling flows (e.g. *manage inbox*, *Digipost Control*) are out of scope here.
+This skill helps you (an AI agent) guide a developer through **sending a document to a recipient** via the Digipost API. It is one *flow* in a larger Digipost integration; sibling flows (e.g. *manage inbox*, *Digipost Control*) are out of scope here.
 
 The skill's job is to give the **correct mental model and the shape of the flow**, then point to the canonical docs for exact fields. Do not invent field names or values — when a specific schema detail is needed, link the developer to the relevant doc page listed below.
 
@@ -93,11 +93,13 @@ For error HTTP statuses at send time (400, 403, 404, …), see https://digipost.
 
 > Reading or managing the organisation's inbox (downloading received documents, sender correlation, deletion, "never auto-delete") is a **different flow** — see the *digipost-manage-inbox* skill.
 
+> Requesting documents *back* from a user (Digipost Control / ShareDocumentsRequest) is a **different flow** — see the *digipost-control* skill. It reuses this skill's send and signing machinery, then adds a read-back half.
+
 ## Out of scope
 
 - Getting an account / certificate issued / test access — manual onboarding via Digipost support: https://digipost.github.io/digipost-technical-docs/index.md
 - Reading a user's inbox or documents — different flow (and note: third-party inbox reading on behalf of users is not offered).
-- Digipost Control (share documents request) — different flow.
+- Digipost Control (share documents request) — different flow; see the *digipost-control* skill.
 - Pricing and contractual setup — not a technical-docs topic; refer to Digipost sales/support.
 
 ## Canonical documentation
