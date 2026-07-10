@@ -93,7 +93,7 @@ For error HTTP statuses at send time (400, 403, 404, …), see https://digipost.
 
 > Reading or managing the organisation's inbox (downloading received documents, sender correlation, deletion, "never auto-delete") is a **different flow** — see the *digipost-manage-inbox* skill.
 
-> Requesting documents *back* from a user (Digipost Control / ShareDocumentsRequest) is a **different flow** — see the *digipost-control* skill. It reuses this skill's send and signing machinery, then adds a read-back half.
+> Requesting access to a document a user holds in Digipost (Digipost Control / ShareDocumentsRequest) is a **different flow** — see the *digipost-control* skill. It reuses this skill's send and signing machinery, then adds a read side.
 
 ## Out of scope
 

@@ -1,9 +1,11 @@
 ---
 name: digipost-control
 description: >-
-  Use when helping a developer use Digipost Control to request documents back
-  from a user through the Digipost API — for example asking a volunteer for a
-  valid police certificate (politiattest) before they take on a role. Covers the
+  Use when helping a developer use Digipost Control to request access to a
+  document a user holds in Digipost — for example asking a volunteer for
+  insight into their valid police certificate (politiattest) before they take
+  on a role. The user sends no copy; if they accept the request, you gain
+  time-limited insight into the document where it sits in Digipost. Covers the
   ShareDocumentsRequest lifecycle: sending the request (which reuses the normal
   send and signing machinery from the digipost-send-post skill), discovering
   shared documents via the event feed, reading request state, fetching shared
@@ -13,7 +15,7 @@ description: >-
 
 # Digipost Control — requesting documents *from* a user
 
-This skill helps you guide a developer through **Digipost Control**: instead of sending a document *to* someone, you ask a recipient to **share documents back with you**. The canonical case is requesting a police certificate (*politiattest*) from a volunteer before they take on a role. The user stays in control — they see your stated purpose and decide whether to share, and the share is time-limited.
+This skill helps you guide a developer through **Digipost Control**: instead of sending a document *to* someone, you ask a recipient for **access to a document they already hold in Digipost**. They send you no copy — if they accept your request, you gain time-limited insight into that document where it sits in Digipost. (The document is one they hold in Digipost — received from an organisation or another person, or uploaded by the user themselves.) The canonical case is requesting a police certificate (*politiattest*) from a volunteer before they take on a role. The user stays in control — they see your stated purpose and decide whether to grant access.
 
 It is one *flow* in a larger Digipost integration. This skill gives the **correct mental model and the shape of the flow**, then points to the canonical docs for exact fields. Do not invent field names or values — when a specific schema detail is needed, link the developer to the relevant doc page listed below.
 
@@ -27,7 +29,7 @@ So everything about building and signing a send transfers directly — reuse it,
 - Security headers and request signing → `../references/signing-and-auth.md` (shared mechanics)
 - sender-id vs org-number, test vs production, client libraries → `../references/conventions.md` (shared mechanics)
 
-What is genuinely **new** in this skill is the **read-back half** — discovering, reading, fetching, and stopping a share.
+What is genuinely **new** in this skill is the **read side** — discovering, reading, fetching, and stopping a share.
 
 ## The mental model (read this first)
 

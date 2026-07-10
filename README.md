@@ -18,7 +18,7 @@ digipost-skills/
       request-anatomy.md
       recipient-identification.md
       physical-mail-fallback.md
-  digipost-control/                 ← flow: request documents back from a user (ShareDocumentsRequest)
+  digipost-control/                 ← flow: request access to a document a user holds in Digipost (ShareDocumentsRequest)
     SKILL.md
     references/                      ← flow-specific
       share-lifecycle.md            ← wire-level lifecycle: XML, events, links, signing
@@ -40,9 +40,9 @@ these skills are designed to ship **together from this repo** rather than be cop
 
 - **digipost-send-post** — sending a document (digital mail / letter): the message/document model, recipient
   identification, multipart request assembly, signing, and reading the delivery response.
-- **digipost-control** — using **Digipost Control** to request documents *back* from a user (ShareDocumentsRequest):
-  the canonical *politiattest* case, then discovering, reading, fetching, and stopping the share. Builds on
-  *digipost-send-post* — the request itself is a normal send — and adds the read-back half.
+- **digipost-control** — using **Digipost Control** to request access to a document a user holds in Digipost
+  (ShareDocumentsRequest): the canonical *politiattest* case, then discovering, reading, fetching, and stopping the
+  share. Builds on *digipost-send-post* — the request itself is a normal send — and adds the read side.
 - **digipost-manage-inbox** — reading and managing the **organisation's own** inbox: listing received documents,
   downloading content, and deleting after retrieval. (Not a way to read an end-user's personal mailbox — see that
   skill's `references/scope-and-boundaries.md`.)
