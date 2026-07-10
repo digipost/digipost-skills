@@ -8,26 +8,9 @@ Authoritative specs:
 [Get state](https://digipost.github.io/digipost-technical-docs/api-spec/control/get-state.md). Defer exact fields and
 the current API version to these pages — do not guess.
 
-## Relationship to the send flow
-
-**Sending a ShareDocumentsRequest is a normal send.** It is the same `POST /messages`, the same multipart assembly,
-the same signing, and the same `message-delivery` response documented by the **digipost-send-post** skill (see
-`../../digipost-send-post/references/request-anatomy.md`). The *only* difference is what rides inside the message: a
-`share-documents-request` data-type on the primary document. So everything you know about building and signing a send
-transfers directly — reuse it, don't relearn it.
-
-The read-back half (discover + get-state below) is what's genuinely new.
-
-## The lifecycle, end to end
-
-1. **Send the request** — `POST /messages` with a `share-documents-request` on the primary document, stating your
-   `purpose` and a `max-share-duration-seconds`. The user receives it and sees the purpose.
-2. **The user shares (or doesn't)** — this happens in Digipost, outside your integration. You cannot force or assume it.
-3. **Discover that documents were shared** — poll `GET /documents/events` and watch for a
-   `SHARE_DOCUMENTS_REQUEST_DOCUMENTS_SHARED` event.
-4. **Read the state** — `GET /{sender-id}/share-documents-requests/uuid/{uuid}` to list the shared documents, their
-   expiry, and the links to fetch content or stop sharing.
-5. **Fetch content** while it is still valid, then optionally **stop sharing**.
+See `../SKILL.md` for the send-flow relationship (sending a ShareDocumentsRequest is an ordinary send) and the
+lifecycle at a glance. This page picks up from there with the wire detail of each step; step numbers match the
+lifecycle in SKILL.md (step 2 — the user shares — is their asynchronous action and has no API of its own).
 
 ## Step 1 — Send the ShareDocumentsRequest
 
@@ -66,8 +49,7 @@ reading state, fetching shared content, stopping the share) — prefer them over
 
 The response is the same `message-delivery` as any send — see the delivery response and send-time errors in the
 **digipost-send-post** skill, and
-[response codes](https://digipost.github.io/digipost-technical-docs/api-spec/response-codes.md). A successful send means
-the *request* was delivered, **not** that anything has been shared yet.
+[response codes](https://digipost.github.io/digipost-technical-docs/api-spec/response-codes.md).
 
 ## Step 3 — Discover that documents were shared
 
@@ -136,12 +118,5 @@ The `POST /messages` in step 1 signs exactly like a normal send (it has a body).
 `../../references/signing-and-auth.md` and defer to the
 [security docs](https://digipost.github.io/digipost-technical-docs/API/security.md) for the canonical details.
 
-## Common snags
-
-| Symptom | Likely cause |
-| --- | --- |
-| "I sent the request but nothing is shared" | Sharing is the user's action and is asynchronous — poll `/documents/events`; it may never come. |
-| Content fetch returns nothing / fails later | The share expired (`expiry-time`) or you reused a one-time content link. Fetch promptly while access is live. |
-| Not sure where the request data goes | It's a `data-type` on the **primary-document**, in the datatypes namespace — not an attachment. |
-| Constructing the content/stop URLs by hand | Use the `rel` links from the get-state response instead. |
-| Signing the GET calls like a POST | The GETs are bodiless — different signing input than the send. See `../../references/signing-and-auth.md`. |
+For common snags (nothing shared, content fetch fails, where the request data goes, signing the GETs), see the
+**Common snags** table in `../SKILL.md`.
