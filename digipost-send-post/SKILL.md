@@ -93,11 +93,13 @@ For error HTTP statuses at send time (400, 403, 404, …), see https://digipost.
 
 > Reading or managing the organisation's inbox (downloading received documents, sender correlation, deletion) is a **different flow** — see the *digipost-manage-inbox* skill.
 
+> Requesting access to a document a user holds in Digipost (Digipost Control / ShareDocumentsRequest) is a **different flow** — see the *digipost-control* skill. It reuses this skill's send and signing machinery, then adds a read side.
+
 ## Out of scope
 
 - Getting an account / certificate issued / test access — manual onboarding via Digipost support: https://digipost.github.io/digipost-technical-docs/index.md
 - Reading or managing the organisation's inbox — see the *digipost-manage-inbox* skill.
-- Digipost Control (share documents request) — different flow.
+- Digipost Control (share documents request) — different flow; see the *digipost-control* skill.
 - Pricing and contractual setup — not a technical-docs topic; refer to Digipost sales/support.
 
 ## Canonical documentation
