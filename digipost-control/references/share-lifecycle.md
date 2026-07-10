@@ -74,12 +74,16 @@ events; carry the `X-Digipost-UserId` header (the **sender id**, as everywhere e
 
 Practical polling advice to give a developer:
 
-- **Advance the window using the `created` timestamps you've already seen**, rather than assuming events arrive in a
-  fixed cadence — sharing can happen minutes or days after the request, or never.
-- **Never assume a share will come.** Respect `max-share-duration-seconds`: if the window passes with no event, the
+- **Track a cursor instead of polling a fixed interval.** On each poll, set the next `from` to just after the newest
+  `created` timestamp you have already processed, so each window continues where the last one ended — no gaps and no
+  re-processing. Don't assume events arrive on a regular schedule: a user may share minutes or days after the request,
+  or never.
+- **Never assume a share will come.** Respect `max-share-duration-seconds`: if that window passes with no event, the
   request has effectively lapsed. Don't build logic that blocks on a share that may not happen.
-- **Low volume? You can skip the event feed** and just poll the request state (step 4) directly — its shared-documents
-  list becomes non-empty once the user shares. The event feed scales better when you have many requests outstanding.
+- **With only a few outstanding requests, you can skip the event feed entirely** and instead poll each request's state
+  directly (step 4): its shared-documents list starts empty and becomes non-empty once the user shares. The event feed
+  is worth the extra cursor bookkeeping only when you have many requests outstanding, since one feed call surfaces
+  shares across all of them at once.
 
 ## Step 4 — Get the state of a request
 
