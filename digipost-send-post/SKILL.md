@@ -91,7 +91,7 @@ Test and production are **different hosts**. Point at the test environment until
 
 For error HTTP statuses at send time (400, 403, 404, …), see https://digipost.github.io/digipost-technical-docs/api-spec/response-codes.md.
 
-> Reading or managing the organisation's inbox (downloading received documents, sender correlation, deletion, "never auto-delete") is a **different flow** — see the *digipost-manage-inbox* skill.
+> Reading or managing the organisation's inbox (downloading received documents, sender correlation, deletion) is a **different flow** — see the *digipost-manage-inbox* skill.
 
 ## Out of scope
 
