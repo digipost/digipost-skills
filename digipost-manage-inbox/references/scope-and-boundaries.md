@@ -18,9 +18,7 @@ https://digipost.github.io/digipost-technical-docs/api-spec/control/index.md
 
 ## Turning off receipt of mail
 
-Whether and how an organisation can stop receiving mail into its inbox is **account configuration**, not an operation
-in the inbox API spec. Don't invent an endpoint or flag for it — confirm the supported approach with Digipost:
-https://digipost.github.io/digipost-technical-docs/other/contact.md
+Whether and how an organisation can stop receiving mail into its inbox is **account configuration**, not an operation in the inbox API spec. That's managed in the business admin UI at digipost.no/bedrift.
 
 ## Read / opening receipts are a send-side concept
 
