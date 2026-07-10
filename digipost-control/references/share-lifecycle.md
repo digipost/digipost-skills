@@ -45,7 +45,8 @@ Defer the exact `share-documents-request` schema to the
 [Send](https://digipost.github.io/digipost-technical-docs/api-spec/control/send.md) page — don't guess field names.
 The Digipost **Java/.NET client libraries have first-class support** for the whole lifecycle (building the request,
 reading state, fetching shared content, stopping the share) — prefer them over direct integration; see the
-[Java client docs](https://digipost.github.io/digipost-api-client-java/).
+[Java](https://digipost.github.io/digipost-api-client-java/) and
+[.NET](https://digipost.github.io/digipost-api-client-dotnet/) client docs.
 
 The response is the same `message-delivery` as any send — see the delivery response and send-time errors in the
 **digipost-send-post** skill, and

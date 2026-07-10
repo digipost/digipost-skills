@@ -76,4 +76,4 @@ For error HTTP statuses at send time (400, 403, 404, …), see https://digipost.
 - Data types & schema: https://digipost.github.io/digipost-technical-docs/data-types/index.md · https://digipost.github.io/digipost-technical-docs/api/schema.md
 - Security / signing: https://digipost.github.io/digipost-technical-docs/API/security.md
 - Response codes: https://digipost.github.io/digipost-technical-docs/api-spec/response-codes.md
-- Java client library: https://digipost.github.io/digipost-api-client-java/
+- Client libraries: [Java](https://digipost.github.io/digipost-api-client-java/) · [.NET](https://digipost.github.io/digipost-api-client-dotnet/)
