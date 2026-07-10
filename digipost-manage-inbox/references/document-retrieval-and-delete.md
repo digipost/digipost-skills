@@ -5,48 +5,29 @@ Authoritative specs: [Get Document](https://digipost.github.io/digipost-technica
 
 ## Downloading the content
 
-You download a document's bytes using the **`content-uri`** that the inbox listing returned for that document (or
-attachment) — see `inbox-anatomy.md`. The content endpoint is a `GET` under the document's content path.
+Fetch a document's bytes by `GET`ing the **`content-uri`** from the inbox listing (attachments have their own
+`content-uri`). The behaviour developers most often get wrong: **the response is not the bytes.** Per the docs it is an
+**HTTP 307 redirect** to a one-time, time-restricted URL on a separate content host — the URL can be used **once** and
+its token is valid for **30 seconds**. So follow the redirect immediately, don't store or reuse the redirect URL, and
+re-request the `content-uri` whenever you need the content again. For the token internals, defer to the Get Document
+page.
 
-The behaviour developers most often get wrong: **the content request does not return the bytes directly.** Per the
-docs, it responds with a **redirect (HTTP 307) to a one-time, time-restricted URL** on a separate Digipost host, and
-the bytes are served from that redirect target. Key properties from the docs:
+The bytes are not guaranteed to be PDF (or any particular format): check the document's `content-type` / `file-type`
+metadata and handle the format accordingly before storing the file or passing it downstream.
 
-- The generated URL is **single-use** — it can be used **once**.
-- It is **short-lived** — the docs state the token is valid for **30 seconds**.
-- It points at a **different host** than the API (a `digipostdata.no` URL in the docs example), with a `token` query
-  parameter.
-
-Practical implications to convey to developers:
-
-- **Follow the redirect immediately**; do not store the redirect URL to use later, and do not fetch it twice.
-- The redirect target is reached over normal HTTPS; the one-time token is what authorises that specific fetch.
-- If you need the content again, request the `content-uri` again to get a fresh one-time URL.
-
-Do not document the exact token-generation algorithm from memory; if a developer needs those internals, point them at
-the Get Document page.
-
-## Validate the content type before storing
-
-The bytes you fetch are **not guaranteed to be PDF** (or any particular format). Validating and handling the type is
-the developer's responsibility: check the response `content-type` and the document's `file-type` metadata before
-writing the file or handing it downstream. Do not assume a format.
+Requesting the content is also what sets the document's `first-accessed` element — listing the inbox does not (see
+`inbox-anatomy.md`).
 
 ## Deleting a document
 
-Deletion uses the **`delete-uri`** from the inbox listing, via an `HTTP DELETE`, and a successful delete responds with
-`200 OK` (per the Delete Document doc).
-
-- Deletion is **optional** — you are not required to delete after downloading. Whether you delete depends on your
-  retention needs.
-- A sensible pattern is: download and confirm you have safely persisted the content, *then* delete, so a failed
-  download never causes data loss.
-- **Never auto-delete to resolve ambiguity.** If you can't confidently identify a sender (or otherwise classify a
-  document), that is **not** a reason to destroy it. Flag it for human review and let the user decide. Deletion is
-  irreversible — this is especially critical in production systems.
+`DELETE` the **`delete-uri`** from the inbox listing; a successful delete responds with `200 OK`. Deletion is
+**optional** — whether you delete depends on your retention needs. A sensible order is download → confirm the content
+is safely persisted → delete, so a failed download never loses data. Deletion is irreversible, so if a document can't
+be confidently classified (e.g. an unrecognised sender), prefer flagging it for review over deleting it.
 
 ## Request signing for GET/DELETE
 
-Both of these are requests **without a body**, which changes the signing slightly (e.g. the content-hash header is not
-used). See the shared `../../references/signing-and-auth.md` for the bodiless-request rules, and defer to the
-[security documentation](https://digipost.github.io/digipost-technical-docs/API/security.md) for the canonical details.
+Both requests have **no body**, a case the
+[security spec](https://digipost.github.io/digipost-technical-docs/API/security.md) covers explicitly: the
+content-hash header is not used, and the spec's canonical-string examples include a request without a body. For the
+client-vs-hand-rolled decision and how to verify a signer, see the shared `../../references/signing-and-auth.md`.
