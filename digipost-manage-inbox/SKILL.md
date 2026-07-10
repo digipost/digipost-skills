@@ -47,12 +47,11 @@ The official [Java](https://digipost.github.io/digipost-api-client-java/v16.x/) 
 | --- | --- | --- |
 | Different results between polls with the same `offset`/`limit` | New arrivals shift offset-based pages; position is not an identifier — track by document id | `references/inbox-anatomy.md` |
 | Content link fails on reuse or after a delay | The content URI redirect is one-time and short-lived; follow it immediately, re-request for a fresh one | `references/document-retrieval-and-delete.md` |
-| Which ID goes where? | The inbox path is keyed by the **sender id**, not the organisation number | `../references/conventions.md` |
 | "Can we see whether recipients opened what we sent?" (åpningskvittering) | Opening receipts are a send-side concept, not an inbox API feature | `references/scope-and-boundaries.md` |
 
 ## Out of scope (point elsewhere)
 
-- Sending documents → that's the *send-document* flow.
+- Sending documents → see the *digipost-send-post* skill: `../digipost-send-post/SKILL.md`.
 - Digipost Control / shared-documents requests → that's the *digipost-control* flow.
 - Reading an end-user's personal mailbox on their behalf → not offered by this API; see `references/scope-and-boundaries.md`.
 - The client libraries' "Archive" functionality → availability is a product/commercial question, not something to design around from the client docs; refer interested developers to Digipost contact: https://digipost.github.io/digipost-technical-docs/other/contact.md
