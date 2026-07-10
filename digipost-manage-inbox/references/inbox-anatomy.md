@@ -20,9 +20,7 @@ assume them when parsing.
   `../../references/conventions.md`.
 - Listing is paged with **`offset`** and **`limit`** query parameters; the client docs cap `limit` at **1000**. These
   are list positions and have no connection to document ids.
-- Requests use the versioned Digipost XML media type in the `Accept` header (`application/vnd.digipost-v8+xml` at the
-  time of writing) — confirm the current version in the
-  [HTTP headers doc](https://digipost.github.io/digipost-technical-docs/api-spec/header.md).
+- Set the versioned XML media type in the `Accept` header — see `../../references/conventions.md`.
 - Documents are ordered by **delivery time** (per the client library docs), so new arrivals shift offset-based pages:
   two consecutive requests with the same `offset`/`limit` may return a different list. Position is not an identifier.
 - A practical polling pattern from the Java client docs: page through the inbox and stop as soon as you reach a
@@ -55,8 +53,5 @@ retrieving system applies is up to you. Defer to the Get Inbox doc for the preci
 
 ## Broker vs. on behalf of itself
 
-An organisation can use the inbox either as a **broker** or on behalf of itself; both require a registered Digipost
-organisation account and use the same security mechanism. The sender id in the path is **whose inbox you are reading**
-— the organisation you operate on behalf of, or your own id when acting for yourself — while your own id always goes in
-the `X-Digipost-UserId` header. Where this changes the request further, defer to the Get Inbox doc and the security
-documentation.
+The sender id in the path is **whose inbox you are reading**. The identity rule is the same across all flows — see
+"Broker: acting on behalf of another sender" in `../../references/conventions.md`.

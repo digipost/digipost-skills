@@ -35,15 +35,11 @@ The skill's job is to give the **correct mental model and the shape of the flow*
 3. **Download content** — request the document's content URI and follow the redirect immediately. See `references/document-retrieval-and-delete.md`.
 4. **(Optional) Delete** — once the content is safely persisted, you may delete the document via its delete URI. Deletion is not mandatory. See `references/document-retrieval-and-delete.md`.
 
-Every request is signed with the same security mechanism as the rest of the API — see the shared `../references/signing-and-auth.md`. The inbox flow's requests are bodiless `GET`/`DELETE`, a case the [security spec](https://digipost.github.io/digipost-technical-docs/API/security.md) covers explicitly (the content-hash header is not used, and its canonical-string examples include a request without a body). For error statuses and error bodies, see [Response codes](https://digipost.github.io/digipost-technical-docs/api-spec/response-codes.md).
+Every request is signed with the same security mechanism as the rest of the API — see the shared `../references/signing-and-auth.md`; the bodiless `GET`/`DELETE` case is covered in `references/document-retrieval-and-delete.md`. For error statuses and error bodies, see [Response codes](https://digipost.github.io/digipost-technical-docs/api-spec/response-codes.md).
 
 ## Client libraries
 
 The official [Java](https://digipost.github.io/digipost-api-client-java/v16.x/) and [.NET](https://digipost.github.io/digipost-api-client-dotnet/v14.0/) clients cover this entire flow — see "Receive messages" in each: fetching the inbox with offset/limit, downloading document and attachment content, and deleting. They also handle request signing. If the developer is on either stack, recommend the client first (see `../references/conventions.md`) and work from those docs' code examples rather than reconstructing raw requests.
-
-## Test vs. production
-
-The inbox endpoints live under the same API host as the rest of the API, and that host **differs between test and production**. Point at the test environment until the flow works end to end, then switch; confirm current hostnames in the docs rather than hardcoding from memory. See `../references/conventions.md` and the [test environment docs](https://digipost.github.io/digipost-technical-docs/process/test-environment.md).
 
 ## Common snags
 
