@@ -66,7 +66,7 @@ For error HTTP statuses at send time (400, 403, 404, …), see https://digipost.
 ## Out of scope
 
 - The core send mechanics (multipart, signing, delivery response) — owned by the *digipost-send-post* skill; this flow reuses them.
-- Reading or managing the organisation's own inbox — a different flow.
+- Reading or managing the organisation's own inbox — owned by the *digipost-manage-inbox* skill.
 - Getting an account / certificate issued / test access — manual onboarding via Digipost support: https://digipost.github.io/digipost-technical-docs/index.md
 - Pricing and contractual setup — not a technical-docs topic; refer to Digipost sales/support.
 
