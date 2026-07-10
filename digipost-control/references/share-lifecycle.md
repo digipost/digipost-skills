@@ -122,8 +122,7 @@ there, and it keeps you resilient to path changes. Defer the exact element list 
 
 - **Fetch before `expiry-time`.** Access is time-boxed by the duration the user granted; a shared document is not a
   permanent copy. **When the duration expires, Digipost automatically closes the request** — the window is a hard
-  ceiling you cannot extend. If you need the document longer than the window, you must persist your own copy while
-  access is live (subject to your own legal basis for storing it).
+  ceiling you cannot extend.
 - **Validate the content type** before storing — don't assume PDF. Same discipline as any content download.
 - **Use `stop_sharing` when you're done.** Ending the share early once you have what you need is good
   data-minimisation and respects the user who granted access. Follow the `stop_sharing` link rather than deleting
