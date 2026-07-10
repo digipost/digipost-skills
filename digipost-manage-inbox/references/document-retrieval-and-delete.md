@@ -12,8 +12,9 @@ its token is valid for **30 seconds**. So follow the redirect immediately, don't
 re-request the `content-uri` whenever you need the content again. For the token internals, defer to the Get Document
 page.
 
-The bytes are not guaranteed to be PDF (or any particular format): check the document's `content-type` / `file-type`
-metadata and handle the format accordingly before storing the file or passing it downstream.
+The bytes are not guaranteed to be PDF (or any particular format): check the document's `content-type` metadata (and
+the `Content-Type` of the downloaded response) and handle the format accordingly before storing the file or passing it
+downstream.
 
 Requesting the content is also what sets the document's `first-accessed` element — listing the inbox does not (see
 `inbox-anatomy.md`).
