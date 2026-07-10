@@ -96,7 +96,7 @@ For error HTTP statuses at send time (400, 403, 404, …), see https://digipost.
 ## Out of scope
 
 - Getting an account / certificate issued / test access — manual onboarding via Digipost support: https://digipost.github.io/digipost-technical-docs/index.md
-- Reading a user's inbox or documents — different flow (and note: third-party inbox reading on behalf of users is not offered).
+- Reading or managing the organisation's inbox — see the *digipost-manage-inbox* skill.
 - Digipost Control (share documents request) — different flow.
 - Pricing and contractual setup — not a technical-docs topic; refer to Digipost sales/support.
 
