@@ -78,8 +78,9 @@ Practical polling advice to give a developer:
   `created` timestamp you have already processed, so each window continues where the last one ended — no gaps and no
   re-processing. Don't assume events arrive on a regular schedule: a user may share minutes or days after the request,
   or never.
-- **Never assume a share will come.** Respect `max-share-duration-seconds`: if that window passes with no event, the
-  request has effectively lapsed. Don't build logic that blocks on a share that may not happen.
+- **Never assume a share will come.** The request itself doesn't expire, and a user may never share — accepting or
+  declining is entirely on their initiative. `max-share-duration-seconds` only starts counting down once documents
+  are actually shared; it caps how long that share stays open.
 - **With only a few outstanding requests, you can skip the event feed entirely** and instead poll each request's state
   directly (step 4): its shared-documents list starts empty and becomes non-empty once the user shares. The event feed
   is worth the extra cursor bookkeeping only when you have many requests outstanding, since one feed call surfaces
@@ -111,7 +112,7 @@ there, and it keeps you resilient to path changes. Defer the exact element list 
   permanent copy. **When the duration expires, Digipost automatically closes the request** — the window is a hard
   ceiling you cannot extend.
 - **Validate the content type** before storing — don't assume PDF. Same discipline as any content download.
-- **Use `stop_sharing` when you're done.** Ending the share early once you have what you need is good
+- **(Optional) Use `stop_sharing` when you're done.** Ending the share early once you have what you need is good
   data-minimisation and respects the user who granted access. Follow the `stop_sharing` link rather than deleting
   anything. Note this only ever *shortens* the window — it ends the request before `expiry-time`; it cannot push the
   expiry out.
