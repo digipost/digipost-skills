@@ -16,7 +16,7 @@ lifecycle in SKILL.md (step 2 — the user shares — is their asynchronous acti
 
 The message is an ordinary send: a recipient plus a **primary-document that is a real PDF** — a covering letter the
 user sees — assembled as multipart and signed, exactly like any send (see
-`../../digipost-send-post/references/request-anatomy.md`). You still add the file bytes; the request is not a bodiless
+the **digipost-send-post** skill's `references/request-anatomy.md`). You still add the file bytes; the request is not a bodiless
 API call. The one thing that makes it a Control request is a `share-documents-request` `data-type` on that
 **`primary-document`** (not an attachment), in the datatypes namespace `http://api.digipost.no/schema/datatypes`:
 
@@ -56,7 +56,7 @@ The response is the same `message-delivery` as any send — see the delivery res
 
 Sharing happens asynchronously and on the user's initiative, so you **poll** for it. `GET /documents/events` returns
 events; carry the `X-Digipost-UserId` header (the **sender id**, as everywhere else — see
-`../../references/conventions.md`, not the organisation number) and page through a time window:
+the **digipost** entry skill's shared conventions, not the organisation number) and page through a time window:
 
 - Query params: `from` and `to` (ISO 8601 with timezone), plus `offset` and `maxResults` for paging.
 - The response is a `document-events` document with `event` elements. The event whose `type` is
@@ -121,7 +121,7 @@ there, and it keeps you resilient to path changes. Defer the exact element list 
 
 The `POST /messages` in step 1 signs exactly like a normal send (it has a body). The `GET` calls in steps 3–5 are
 **bodiless** requests, which signs slightly differently (no content-hash header). See the bodiless-request rules in
-`../../references/signing-and-auth.md` and defer to the
+the **digipost-signing** skill and defer to the
 [security docs](https://digipost.github.io/digipost-technical-docs/API/security.md) for the canonical details.
 
 For common snags (nothing shared, content fetch fails, where the request data goes, signing the GETs), see the

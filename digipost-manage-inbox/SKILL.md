@@ -19,7 +19,7 @@ The skill's job is to give the **correct mental model and the shape of the flow*
 ## How to use this skill
 
 1. Read this file to orient on the flow and the mental model.
-2. Load the relevant `references/` file(s) only for the part the developer is stuck on — they are written to be read independently. Files under `references/` are specific to this flow; files under `../references/` (repo root) are shared across all Digipost flows.
+2. Load the relevant `references/` file(s) only for the part the developer is stuck on — they are written to be read independently. Files under `references/` are specific to this flow. Shared mechanics live in sibling skills: request signing in the **digipost-signing** skill, and cross-cutting conventions (sender-id vs org-number, test vs production, client libraries) in the **digipost** entry skill.
 
 ## The mental model (read this first)
 
@@ -35,11 +35,11 @@ The skill's job is to give the **correct mental model and the shape of the flow*
 3. **Download content** — request the document's content URI and follow the redirect immediately. See `references/document-retrieval-and-delete.md`.
 4. **(Optional) Delete** — once the content is safely persisted, you may delete the document via its delete URI. Deletion is not mandatory. See `references/document-retrieval-and-delete.md`.
 
-Every request is signed with the same security mechanism as the rest of the API — see the shared `../references/signing-and-auth.md`; the bodiless `GET`/`DELETE` case is covered in `references/document-retrieval-and-delete.md`. For error statuses and error bodies, see [Response codes](https://digipost.github.io/digipost-technical-docs/api-spec/response-codes.md).
+Every request is signed with the same security mechanism as the rest of the API — see the **digipost-signing** skill; the bodiless `GET`/`DELETE` case is covered in `references/document-retrieval-and-delete.md`. For error statuses and error bodies, see [Response codes](https://digipost.github.io/digipost-technical-docs/api-spec/response-codes.md).
 
 ## Client libraries
 
-The official [Java](https://digipost.github.io/digipost-api-client-java/v16.x/) and [.NET](https://digipost.github.io/digipost-api-client-dotnet/v14.0/) clients cover this entire flow — see "Receive messages" in each: fetching the inbox with offset/limit, downloading document and attachment content, and deleting. They also handle request signing. If the developer is on either stack, recommend the client first (see `../references/conventions.md`) and work from those docs' code examples rather than reconstructing raw requests.
+The official [Java](https://digipost.github.io/digipost-api-client-java/v16.x/) and [.NET](https://digipost.github.io/digipost-api-client-dotnet/v14.0/) clients cover this entire flow — see "Receive messages" in each: fetching the inbox with offset/limit, downloading document and attachment content, and deleting. They also handle request signing. If the developer is on either stack, recommend the client first (see the **digipost** skill's client-library note) and work from those docs' code examples rather than reconstructing raw requests.
 
 ## Common snags
 
@@ -51,12 +51,12 @@ The official [Java](https://digipost.github.io/digipost-api-client-java/v16.x/) 
 
 ## Out of scope (point elsewhere)
 
-- Sending documents → see the *digipost-send-post* skill: `../digipost-send-post/SKILL.md`.
+- Sending documents → see the *digipost-send-post* skill.
 - Digipost Control / shared-documents requests → that's the *digipost-control* flow.
 - Reading an end-user's personal mailbox on their behalf → not offered by this API; see `references/scope-and-boundaries.md`.
 - The client libraries' "Archive" functionality → availability is a product/commercial question, not something to design around from the client docs; refer interested developers to Digipost contact: https://digipost.github.io/digipost-technical-docs/other/contact.md
 - Getting an account / certificate issued / test access → manual onboarding via Digipost support: https://digipost.github.io/digipost-technical-docs/index.md
-- Pricing and contractual setup → not a technical-docs topic; refer to Digipost sales/support.
+- Pricing → public price list: https://www.digipost.no/bedrift/priser. Contracts and custom / enterprise terms still go through Digipost sales.
 
 ## Canonical documentation
 

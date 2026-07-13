@@ -18,7 +18,7 @@ The skill's job is to give the **correct mental model and the shape of the flow*
 ## How to use this skill
 
 1. Read this file to orient on the flow and the mental model.
-2. Load the relevant `references/` file(s) only for the part the developer is stuck on — they are written to be read independently. Files under `references/` are specific to this flow; files under `../references/` (repo root) are shared across all Digipost flows.
+2. Load the relevant `references/` file(s) only for the part the developer is stuck on — they are written to be read independently. Files under `references/` are specific to this flow. Shared mechanics live in sibling skills: request signing in the **digipost-signing** skill, and cross-cutting conventions (sender-id vs org-number, test vs production, client libraries) in the **digipost** entry skill.
 
 ## The mental model (read this first)
 
@@ -56,7 +56,7 @@ The `authentication-level` and `sensitivity-level` fields on each document are *
 1. **Decide delivery target.** Digital mail goes to a Digipost user; if the recipient is not a user, sending can fall back to physical mail (print) — falling back is a decision made in your own code (see `references/physical-mail-fallback.md`). A separate `POST /identification` tells you ahead of time whether the recipient is a Digipost user. This is useful if you are unsure whether a person is a Digipost user or not, but is not mandatory to do before sending. See `references/recipient-identification.md`.
 2. **Build the message XML** — recipient + `primary-document` (+ `attachment`s). Set `authentication-level` and `sensitivity-level` on each document (see section above). See `references/request-anatomy.md`.
 3. **Assemble the multipart request** — the message XML as the first part, then one content part per document, each `filename` = the document's UUID.
-4. **Add the security headers and sign the request.** This is the other big snag area. See `../references/signing-and-auth.md`.
+4. **Add the security headers and sign the request.** This is the other big snag area. See the **digipost-signing** skill.
 5. **POST to `/messages`** (test or production endpoint — see below) and **read the response**: a `message-delivery` with a `status`, or an error. See https://digipost.github.io/digipost-technical-docs/api-spec/response-codes.md.
 
 ## Additional features
@@ -77,7 +77,7 @@ Invoices are one of the [Digipost data types](https://github.com/digipost/digipo
 
 ## Test vs. production
 
-Test and production are **different hosts**. Point at the test environment until sending works end to end, then switch; confirm current hostnames in the docs rather than hardcoding from memory. A production account is enabled separately (by emailing Digipost support) after test integration works. See `../references/conventions.md` and the [test environment docs](https://digipost.github.io/digipost-technical-docs/process/test-environment.md).
+Test and production are **different hosts**. Point at the test environment until sending works end to end, then switch; confirm current hostnames in the docs rather than hardcoding from memory. A production account is enabled separately (by emailing Digipost support) after test integration works. See the **digipost** skill's shared conventions and the [test environment docs](https://digipost.github.io/digipost-technical-docs/process/test-environment.md).
 
 ## Common snags
 
@@ -86,7 +86,7 @@ Test and production are **different hosts**. Point at the test environment until
 | "What do I send — a message or a file?" | Treating message and file as separate calls | Mental model above; `references/request-anatomy.md` |
 | `messages` vs `/messages` confusion | Wrong path / base URL; test vs prod host | `references/request-anatomy.md` |
 | æøå garbled | Body not encoded as UTF-8 | `references/request-anatomy.md` |
-| Which ID goes where? | `X-Digipost-UserId` is the **sender id**, not the organisation number | `../references/conventions.md` |
+| Which ID goes where? | `X-Digipost-UserId` is the **sender id**, not the organisation number | **digipost** skill (conventions) |
 | `Content-Type` for the request "not in docs" | It's a *multipart* type with a boundary, and each part has its own headers | `references/request-anatomy.md` |
 
 For error HTTP statuses at send time (400, 403, 404, …), see https://digipost.github.io/digipost-technical-docs/api-spec/response-codes.md.
@@ -100,7 +100,7 @@ For error HTTP statuses at send time (400, 403, 404, …), see https://digipost.
 - Getting an account / certificate issued / test access — manual onboarding via Digipost support: https://digipost.github.io/digipost-technical-docs/index.md
 - Reading or managing the organisation's inbox — see the *digipost-manage-inbox* skill.
 - Digipost Control (share documents request) — different flow; see the *digipost-control* skill.
-- Pricing and contractual setup — not a technical-docs topic; refer to Digipost sales/support.
+- Pricing — see the public price list: https://www.digipost.no/bedrift/priser. Contracts and custom / enterprise terms still go through Digipost sales.
 
 ## Canonical documentation
 

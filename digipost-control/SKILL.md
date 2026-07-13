@@ -25,9 +25,9 @@ The single most useful thing to understand is that **sending a ShareDocumentsReq
 
 So everything about building and signing a send transfers directly — reuse it, don't relearn it:
 
-- Multipart request assembly and the message/document model → `../digipost-send-post/references/request-anatomy.md`
-- Security headers and request signing → `../references/signing-and-auth.md` (shared mechanics)
-- sender-id vs org-number, test vs production, client libraries → `../references/conventions.md` (shared mechanics)
+- Multipart request assembly and the message/document model → the **digipost-send-post** skill (its `references/request-anatomy.md`)
+- Security headers and request signing → the **digipost-signing** skill (shared mechanics)
+- sender-id vs org-number, test vs production, client libraries → the **digipost** entry skill (shared conventions)
 
 What is genuinely **new** in this skill is the **read side** — discovering, reading, fetching, and stopping a share.
 
@@ -57,7 +57,7 @@ See `references/share-lifecycle.md` for the full flow with the exact XML, event 
 | Content fetch fails / returns nothing | Share expired (`expiry-time`) or a one-time content link was reused; fetch promptly | `references/share-lifecycle.md` |
 | Not sure where the request data goes | It's a `data-type` on the **primary-document**, in the datatypes namespace — not an attachment | `references/share-lifecycle.md` |
 | Constructing the content/stop URLs by hand | Use the `rel` links from the get-state response instead | `references/share-lifecycle.md` |
-| Signing the GET calls like a POST | The GETs are bodiless — different signing input than the send | `../references/signing-and-auth.md` |
+| Signing the GET calls like a POST | The GETs are bodiless — different signing input than the send | **digipost-signing** skill |
 
 For error HTTP statuses at send time (400, 403, 404, …), see https://digipost.github.io/digipost-technical-docs/api-spec/response-codes.md.
 
@@ -68,7 +68,7 @@ For error HTTP statuses at send time (400, 403, 404, …), see https://digipost.
 - The core send mechanics (multipart, signing, delivery response) — owned by the *digipost-send-post* skill; this flow reuses them.
 - Reading or managing the organisation's own inbox — owned by the *digipost-manage-inbox* skill.
 - Getting an account / certificate issued / test access — manual onboarding via Digipost support: https://digipost.github.io/digipost-technical-docs/index.md
-- Pricing and contractual setup — not a technical-docs topic; refer to Digipost sales/support.
+- Pricing — see the public price list: https://www.digipost.no/bedrift/priser (Control is sold in subscription tiers). Contracts and custom / enterprise terms still go through Digipost sales.
 
 ## Canonical documentation
 
