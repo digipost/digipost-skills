@@ -1,13 +1,13 @@
 # Shared conventions across Digipost flows
 
-Cross-cutting facts that recur in every flow. Kept here once so the per-flow references don't repeat them.
+Cross-cutting facts that recur in every flow. Kept here once, in the entry **digipost** skill, so the per-flow skills don't repeat them.
 
 ## Sender id vs. organisation number (frequent confusion)
 
 These are different identifiers and are easy to mix up:
 
 - The **sender id** is your Digipost account id, found at digipost.no/bedrift. It is what goes in the
-  `X-Digipost-UserId` header (see [signing-and-auth.md](signing-and-auth.md)), keys inbox paths
+  `X-Digipost-UserId` header (signed on every request — see the **digipost-signing** skill), keys inbox paths
   (`.../{sender-id}/inbox`), and appears as `sender-id` in delivery responses.
 - The **organisation number** is your company's national org. number — used during onboarding/registration, **not** as
   the API sender identifier.
