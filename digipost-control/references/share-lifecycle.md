@@ -94,7 +94,7 @@ Once you know something was shared (or any time you want the current picture), r
 
 The response (`share-documents-request-state`) lists each `shared-document` with metadata and, crucially, **HATEOAS
 links** for the actions you can take. Expect elements like `delivery-time`, `subject`, `file-type`,
-`file-size-bytes`, an `origin` (either `private-person` or `organisation`), plus `shared-at-time` and `expiry-time`.
+`file-size-bytes`, an `origin` (either `private-person` or `organisation` as nested XML with attributes), plus `shared-at-time` and `expiry-time`.
 
 The link relations (`rel` values) to look for:
 
