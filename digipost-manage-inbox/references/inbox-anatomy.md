@@ -17,10 +17,10 @@ assume them when parsing.
 ## Pagination and ordering
 
 - The path is keyed by the **sender id** — your Digipost account id, **not** the organisation number. See
-  `../../references/conventions.md`.
+  the **digipost** entry skill's shared conventions.
 - Listing is paged with **`offset`** and **`limit`** query parameters; the client docs cap `limit` at **1000**. These
   are list positions and have no connection to document ids.
-- Set the versioned XML media type in the `Accept` header — see `../../references/conventions.md`.
+- Set the versioned XML media type in the `Accept` header — see the **digipost** entry skill's shared conventions.
 - Documents are ordered by **delivery time** (per the client library docs), so new arrivals shift offset-based pages:
   two consecutive requests with the same `offset`/`limit` may return a different list. Position is not an identifier.
 - A practical polling pattern from the Java client docs: page through the inbox and stop as soon as you reach a
@@ -54,4 +54,4 @@ retrieving system applies is up to you.
 ## Broker vs. on behalf of itself
 
 The sender id in the path is **whose inbox you are reading**. The identity rule is the same across all flows — see
-"Broker: acting on behalf of another sender" in `../../references/conventions.md`.
+"Broker: acting on behalf of another sender" in the **digipost** entry skill's shared conventions.

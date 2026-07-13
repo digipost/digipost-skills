@@ -1,3 +1,16 @@
+---
+name: digipost-auth-and-signing
+description: >-
+  Use when signing requests to the Digipost API or verifying its signed
+  responses — the security headers, the canonical string, and the
+  SHA256withRSA signature — and when diagnosing a 403 or signature error on an
+  otherwise correct request. This is the shared prerequisite for every Digipost
+  flow (send, inbox, Control). On the JVM or .NET the client library does all of
+  this for you; in any other language you hand-roll it against the spec and
+  verify it before trusting it. Defers the canonical format to the official
+  Digipost security documentation.
+---
+
 # Request signing
 
 Every request to the Digipost API is signed (SHA256withRSA over a canonical

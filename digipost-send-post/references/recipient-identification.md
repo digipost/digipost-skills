@@ -49,7 +49,7 @@ privacy exposure.
 
 Don't confuse the identifier that addresses the *recipient* (fødselsnummer / Digipost address / name+address, above)
 with the identifier that authenticates *you* the sender. The API header wants your **sender id**, not your organisation
-number — full explanation in `../../references/conventions.md`.
+number — full explanation in the **digipost** entry skill's shared conventions.
 
 ## If the recipient is not a Digipost user
 
