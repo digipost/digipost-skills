@@ -7,7 +7,7 @@ Cross-cutting facts that recur in every flow. Kept here once, in the entry **dig
 These are different identifiers and are easy to mix up:
 
 - The **sender id** is your Digipost account id, found at digipost.no/bedrift. It is what goes in the
-  `X-Digipost-UserId` header (signed on every request — see the **digipost-signing** skill), keys inbox paths
+  `X-Digipost-UserId` header (signed on every request — see the **digipost-auth-and-signing** skill), keys inbox paths
   (`.../{sender-id}/inbox`), and appears as `sender-id` in delivery responses.
 - The **organisation number** is your company's national org. number — used during onboarding/registration, **not** as
   the API sender identifier.

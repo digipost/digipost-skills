@@ -18,7 +18,7 @@ The skill's job is to give the **correct mental model and the shape of the flow*
 ## How to use this skill
 
 1. Read this file to orient on the flow and the mental model.
-2. Load the relevant `references/` file(s) only for the part the developer is stuck on — they are written to be read independently. Files under `references/` are specific to this flow. Shared mechanics live in sibling skills: request signing in the **digipost-signing** skill, and cross-cutting conventions (sender-id vs org-number, test vs production, client libraries) in the **digipost** entry skill.
+2. Load the relevant `references/` file(s) only for the part the developer is stuck on — they are written to be read independently. Files under `references/` are specific to this flow. Shared mechanics live in sibling skills: request signing in the **digipost-auth-and-signing** skill, and cross-cutting conventions (sender-id vs org-number, test vs production, client libraries) in the **digipost** entry skill.
 
 ## The mental model (read this first)
 
@@ -56,7 +56,7 @@ The `authentication-level` and `sensitivity-level` fields on each document are *
 1. **Decide delivery target.** Digital mail goes to a Digipost user; if the recipient is not a user, sending can fall back to physical mail (print) — falling back is a decision made in your own code (see `references/physical-mail-fallback.md`). A separate `POST /identification` tells you ahead of time whether the recipient is a Digipost user. This is useful if you are unsure whether a person is a Digipost user or not, but is not mandatory to do before sending. See `references/recipient-identification.md`.
 2. **Build the message XML** — recipient + `primary-document` (+ `attachment`s). Set `authentication-level` and `sensitivity-level` on each document (see section above). See `references/request-anatomy.md`.
 3. **Assemble the multipart request** — the message XML as the first part, then one content part per document, each `filename` = the document's UUID.
-4. **Add the security headers and sign the request.** This is the other big snag area. See the **digipost-signing** skill.
+4. **Add the security headers and sign the request.** This is the other big snag area. See the **digipost-auth-and-signing** skill.
 5. **POST to `/messages`** (test or production endpoint — see below) and **read the response**: a `message-delivery` with a `status`, or an error. See https://digipost.github.io/digipost-technical-docs/api-spec/response-codes.md.
 
 ## Additional features

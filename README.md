@@ -20,7 +20,7 @@ digipost-skills/
   digipost/                         ← entry point: routes to the others; shared conventions
     SKILL.md
     references/conventions.md       ← sender-id vs org-number, broker rule, media type, test vs prod, client libs
-  digipost-signing/                 ← shared prerequisite: security headers, request signing, 403 diagnosis
+  digipost-auth-and-signing/                 ← shared prerequisite: security headers, request signing, 403 diagnosis
     SKILL.md
   digipost-send-post/               ← flow: send a document to a recipient
     SKILL.md
@@ -45,7 +45,7 @@ digipost-skills/
 - **digipost** — the entry point. Start here when integrating against Digipost without a specific flow in mind, or for
   cross-cutting questions (which client library, test vs production, sender-id vs organisation number). Routes to the
   flow-specific skills and the signing prerequisite.
-- **digipost-signing** — the shared prerequisite every flow depends on: security headers, request signing, response
+- **digipost-auth-and-signing** — the shared prerequisite every flow depends on: security headers, request signing, response
   verification, and diagnosing a `403` / signature error. On the JVM or .NET the client library handles it; other
   languages hand-roll it against the spec and verify before trusting.
 - **digipost-send-post** — sending a document (digital mail / letter): the message/document model, recipient
@@ -58,7 +58,7 @@ digipost-skills/
   skill's `references/scope-and-boundaries.md`.)
 
 Further flows can be added as sibling folders following the same pattern: a self-contained `SKILL.md` + `references/`,
-routing to `digipost` and `digipost-signing` by name.
+routing to `digipost` and `digipost-auth-and-signing` by name.
 
 ## Installing
 

@@ -1,5 +1,5 @@
 ---
-name: digipost-signing
+name: digipost-auth-and-signing
 description: >-
   Use when signing requests to the Digipost API or verifying its signed
   responses — the security headers, the canonical string, and the

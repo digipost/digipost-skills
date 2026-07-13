@@ -6,7 +6,7 @@ description: >-
   which client library to use, test vs production, or sender-id vs organisation
   number. The entry point that routes to the flow-specific Digipost skills
   (digipost-send-post, digipost-manage-inbox, digipost-control) and the shared
-  digipost-signing prerequisite. Defers exact fields and schema to the official
+  digipost-auth-and-signing prerequisite. Defers exact fields and schema to the official
   Digipost technical documentation.
 ---
 
@@ -21,9 +21,9 @@ This is the entry point for building an integration against the **Digipost API**
 | Send a document — digital mail / letter — to a recipient | **digipost-send-post** |
 | Read & manage the organisation's own inbox (list, download, delete received documents) | **digipost-manage-inbox** |
 | Request access to a document a user holds in Digipost (Digipost Control / ShareDocumentsRequest, e.g. *politiattest*) | **digipost-control** |
-| Sign requests, or debug a `403` / signature error | **digipost-signing** |
+| Sign requests, or debug a `403` / signature error | **digipost-auth-and-signing** |
 
-Every flow sends signed requests, so **digipost-signing** applies no matter which one you pick. *digipost-control* additionally builds on *digipost-send-post* — a Control request is an ordinary send.
+Every flow sends signed requests, so **digipost-auth-and-signing** applies no matter which one you pick. *digipost-control* additionally builds on *digipost-send-post* — a Control request is an ordinary send.
 
 ## Use a client library if you can (the first decision)
 
@@ -36,7 +36,7 @@ Recommend the official **Java or .NET client library** unless the developer has 
 
 ## Signing is the prerequisite for everything
 
-Every request to the Digipost API is signed, and every response is signed back. No flow works until signing does, and a broken signer looks like a mysterious `403` on an otherwise correct request. On the JVM or .NET the client library signs for you; in any other language you hand-roll the spec and verify it before trusting it. This is shared mechanics, not part of any one flow — see the **digipost-signing** skill before your first request, and return to it if a request fails with a signature error mid-flow.
+Every request to the Digipost API is signed, and every response is signed back. No flow works until signing does, and a broken signer looks like a mysterious `403` on an otherwise correct request. On the JVM or .NET the client library signs for you; in any other language you hand-roll the spec and verify it before trusting it. This is shared mechanics, not part of any one flow — see the **digipost-auth-and-signing** skill before your first request, and return to it if a request fails with a signature error mid-flow.
 
 ## Shared conventions
 

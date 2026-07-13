@@ -26,7 +26,7 @@ The single most useful thing to understand is that **sending a ShareDocumentsReq
 So everything about building and signing a send transfers directly — reuse it, don't relearn it:
 
 - Multipart request assembly and the message/document model → the **digipost-send-post** skill (its `references/request-anatomy.md`)
-- Security headers and request signing → the **digipost-signing** skill (shared mechanics)
+- Security headers and request signing → the **digipost-auth-and-signing** skill (shared mechanics)
 - sender-id vs org-number, test vs production, client libraries → the **digipost** entry skill (shared conventions)
 
 What is genuinely **new** in this skill is the **read side** — discovering, reading, fetching, and stopping a share.
@@ -57,7 +57,7 @@ See `references/share-lifecycle.md` for the full flow with the exact XML, event 
 | Content fetch fails / returns nothing | Share expired (`expiry-time`) or a one-time content link was reused; fetch promptly | `references/share-lifecycle.md` |
 | Not sure where the request data goes | It's a `data-type` on the **primary-document**, in the datatypes namespace — not an attachment | `references/share-lifecycle.md` |
 | Constructing the content/stop URLs by hand | Use the `rel` links from the get-state response instead | `references/share-lifecycle.md` |
-| Signing the GET calls like a POST | The GETs are bodiless — different signing input than the send | **digipost-signing** skill |
+| Signing the GET calls like a POST | The GETs are bodiless — different signing input than the send | **digipost-auth-and-signing** skill |
 
 For error HTTP statuses at send time (400, 403, 404, …), see https://digipost.github.io/digipost-technical-docs/api-spec/response-codes.md.
 

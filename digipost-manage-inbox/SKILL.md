@@ -19,7 +19,7 @@ The skill's job is to give the **correct mental model and the shape of the flow*
 ## How to use this skill
 
 1. Read this file to orient on the flow and the mental model.
-2. Load the relevant `references/` file(s) only for the part the developer is stuck on — they are written to be read independently. Files under `references/` are specific to this flow. Shared mechanics live in sibling skills: request signing in the **digipost-signing** skill, and cross-cutting conventions (sender-id vs org-number, test vs production, client libraries) in the **digipost** entry skill.
+2. Load the relevant `references/` file(s) only for the part the developer is stuck on — they are written to be read independently. Files under `references/` are specific to this flow. Shared mechanics live in sibling skills: request signing in the **digipost-auth-and-signing** skill, and cross-cutting conventions (sender-id vs org-number, test vs production, client libraries) in the **digipost** entry skill.
 
 ## The mental model (read this first)
 
@@ -35,7 +35,7 @@ The skill's job is to give the **correct mental model and the shape of the flow*
 3. **Download content** — request the document's content URI and follow the redirect immediately. See `references/document-retrieval-and-delete.md`.
 4. **(Optional) Delete** — once the content is safely persisted, you may delete the document via its delete URI. Deletion is not mandatory. See `references/document-retrieval-and-delete.md`.
 
-Every request is signed with the same security mechanism as the rest of the API — see the **digipost-signing** skill; the bodiless `GET`/`DELETE` case is covered in `references/document-retrieval-and-delete.md`. For error statuses and error bodies, see [Response codes](https://digipost.github.io/digipost-technical-docs/api-spec/response-codes.md).
+Every request is signed with the same security mechanism as the rest of the API — see the **digipost-auth-and-signing** skill; the bodiless `GET`/`DELETE` case is covered in `references/document-retrieval-and-delete.md`. For error statuses and error bodies, see [Response codes](https://digipost.github.io/digipost-technical-docs/api-spec/response-codes.md).
 
 ## Client libraries
 
