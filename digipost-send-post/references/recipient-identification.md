@@ -35,6 +35,7 @@ defer there rather than guessing element names.
 - `IDENTIFIED` — the person was identified but is **not** a Digipost user. A returned `person-alias` can be reused in
   later identification.
 - `UNIDENTIFIED` — Digipost could not identify the person from the supplied information.
+- `INVALID`- The identifier itself was invalid (bad format / failed validation).
 
 You can rely on the returned Digipost user being the same person specified in the request.
 

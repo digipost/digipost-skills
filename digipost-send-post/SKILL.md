@@ -61,7 +61,7 @@ The `authentication-level` and `sensitivity-level` fields on each document are *
 
 ## Additional features
 
-Beyond the core send flow above, a few other capabilities exist. The [Java](https://digipost.github.io/digipost-api-client-java/v16.x/) and [.NET](https://digipost.github.io/digipost-api-client-dotnet/v14.0/) client libraries expose builder APIs for all three, which is the easiest path if you're on those stacks. The wire format underneath is still just XML per the schema, though, so developers on other languages can implement these directly against the [schema](https://digipost.github.io/digipost-technical-docs/assets/documents/api_v8.xsd) — pointers below.
+Beyond the core send flow above, a few other capabilities exist. The [Java](https://digipost.github.io/digipost-api-client-java/) and [.NET](https://digipost.github.io/digipost-api-client-dotnet/) client libraries expose builder APIs for all three, which is the easiest path if you're on those stacks. The wire format underneath is still just XML per the schema, though, so developers on other languages can implement these directly against the [schema](https://digipost.github.io/digipost-technical-docs/assets/documents/api_v8.xsd) — pointers below.
 
 ### SMS notification
 

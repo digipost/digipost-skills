@@ -40,9 +40,7 @@ below before trusting it.
 
 ## Verify before trusting a hand-rolled signer
 
-- If you have access to the Digipost MCP server, use the `validateRequest` tool, run a sample request
-  through it and fix whatever it flags — no live send needed.
-- Otherwise send a request to the test environment; on a signature error the API
+- Send a sample signed request to the test environment first; on a signature error the API
   echoes the exact canonical string it expected, between `===START===` and
   `===SLUTT===`. Diff yours against it — the difference is the bug.
 

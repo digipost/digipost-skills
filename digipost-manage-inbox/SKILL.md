@@ -39,7 +39,7 @@ Every request is signed with the same security mechanism as the rest of the API 
 
 ## Client libraries
 
-The official [Java](https://digipost.github.io/digipost-api-client-java/v16.x/) and [.NET](https://digipost.github.io/digipost-api-client-dotnet/v14.0/) clients cover this entire flow — see "Receive messages" in each: fetching the inbox with offset/limit, downloading document and attachment content, and deleting. They also handle request signing. If the developer is on either stack, recommend the client first (see the **digipost** skill's client-library note) and work from those docs' code examples rather than reconstructing raw requests.
+The official [Java](https://digipost.github.io/digipost-api-client-java/) and [.NET](https://digipost.github.io/digipost-api-client-dotnet/) clients cover this entire flow — see "Receive messages" in each: fetching the inbox with offset/limit, downloading document and attachment content, and deleting. They also handle request signing. If the developer is on either stack, recommend the client first (see the **digipost** skill's client-library note) and work from those docs' code examples rather than reconstructing raw requests.
 
 ## Common snags
 
