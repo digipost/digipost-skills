@@ -14,7 +14,7 @@ lifecycle in SKILL.md (step 2 — the user shares — is their asynchronous acti
 
 ## Step 1 — Send the ShareDocumentsRequest
 
-The message is an ordinary send: a recipient plus a **primary-document that is a real PDF** — a covering letter the
+The message is an ordinary send: a recipient plus a **primary-document** — a covering letter the
 user sees — assembled as multipart and signed, exactly like any send (see
 the **digipost-send-post** skill's `references/request-anatomy.md`). You still add the file bytes; the request is not a bodiless
 API call. The one thing that makes it a Control request is a `share-documents-request` `data-type` on that
@@ -35,7 +35,7 @@ API call. The one thing that makes it a Control request is a `share-documents-re
 Two fields shape the request:
 
 - **`purpose`** — a short free-text line, shown to the user as the consent prompt explaining *why* you need the
-  documentation. Keep it short: the fuller explanation belongs in the **PDF covering letter** you attach. Write both as
+  documentation. Keep it short: the fuller explanation belongs in the **covering letter** you attach. Write both as
   if the recipient will read them, because they will — a vague ask undermines trust and reduces the chance they share.
 - **`max-share-duration-seconds`** — how long the share stays valid once granted (the example uses `1209600` = 14 days).
   Ask for what you actually need; a short window is better data-minimisation practice.

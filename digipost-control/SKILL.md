@@ -33,7 +33,7 @@ What is genuinely **new** in this skill is the **read side** — discovering, re
 
 ## The mental model (read this first)
 
-- **Sending the request is an ordinary send.** A real message with a recipient and a **primary-document that is a real PDF** (a covering letter the user reads), carrying a `share-documents-request` data-type. A successful send means the *request* was delivered — **not** that anything has been shared yet.
+- **Sending the request is an ordinary send.** A real message with a recipient and a **real primary-document** (a covering letter the user reads), carrying a `share-documents-request` data-type. A successful send means the *request* was delivered — **not** that anything has been shared yet.
 - **Sharing is the user's asynchronous action.** It happens in Digipost, on the user's initiative, outside your integration. You cannot force it and must never assume it — it may happen minutes or days later, or never.
 - **Access is time-boxed, and the ceiling is hard.** A shared document is not a permanent copy; it expires at `expiry-time`, at which point Digipost **automatically closes the request**. You can end it *earlier* with `stop_sharing`, but you cannot extend it beyond the `max-share-duration-seconds` the user granted.
 
@@ -45,7 +45,7 @@ What is genuinely **new** in this skill is the **read side** — discovering, re
 4. **Read state** — `GET /{sender-id}/share-documents-requests/uuid/{uuid}` to list shared documents, their expiry, and the HATEOAS links.
 5. **Fetch content before it expires, then stop sharing** — follow the `rel` links; respect `expiry-time`; use `stop_sharing` when done.
 
-Two principles worth stating up front to a developer: the `purpose` field is a short consent prompt shown to the user (the fuller explanation belongs in the PDF covering letter — both are read), and access is time-boxed. The Java/.NET client libraries have **first-class support for the whole lifecycle** (building the request, reading state, fetching content, stopping the share) — prefer them over direct integration.
+Two principles worth stating up front to a developer: the `purpose` field is a short consent prompt shown to the user (the fuller explanation belongs in the covering letter — both are read), and access is time-boxed. The Java/.NET client libraries have **first-class support for the whole lifecycle** (building the request, reading state, fetching content, stopping the share) — prefer them over direct integration.
 
 See `references/share-lifecycle.md` for the full flow with the exact XML, event and link names, get-state elements, and the bodiless-GET signing note.
 
