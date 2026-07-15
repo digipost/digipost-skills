@@ -22,6 +22,7 @@ reconstructing it from memory:
 
 This assumes you already have your signing certificate (a PKCS#12 `.p12` file
 plus its password) and your Digipost sender id (the `X-Digipost-UserId` value).
+Read more about what types of certificates are supported, and how to obtain one here: https://digipost.github.io/digipost-technical-docs/api/certificate.md.
 
 ## On the JVM or .NET
 
