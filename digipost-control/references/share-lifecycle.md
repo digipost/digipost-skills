@@ -122,7 +122,7 @@ there, and it keeps you resilient to path changes. Defer the exact element list 
 The `POST /messages` in step 1 signs exactly like a normal send (it has a body). The `GET` calls in steps 3–5 are
 **bodiless** requests, which signs slightly differently (no content-hash header). See the bodiless-request rules in
 the **digipost-auth-and-signing** skill and defer to the
-[security docs](https://digipost.github.io/digipost-technical-docs/API/security.md) for the canonical details.
+[security docs](https://digipost.github.io/digipost-technical-docs/api/security.md) for the canonical details.
 
 For common snags (nothing shared, content fetch fails, where the request data goes, signing the GETs), see the
 **Common snags** table in `../SKILL.md`.

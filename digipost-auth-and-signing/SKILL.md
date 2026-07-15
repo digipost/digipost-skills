@@ -18,7 +18,7 @@ string built from the method, path, a few headers, and the query), and every
 response is signed back. The format is fully specified — follow it rather than
 reconstructing it from memory:
 
-> Canonical spec: https://digipost.github.io/digipost-technical-docs/API/security.md
+> Canonical spec: https://digipost.github.io/digipost-technical-docs/api/security.md
 
 This assumes you already have your signing certificate (a PKCS#12 `.p12` file
 plus its password) and your Digipost sender id (the `X-Digipost-UserId` value).

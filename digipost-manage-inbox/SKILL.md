@@ -65,7 +65,7 @@ The official [Java](https://digipost.github.io/digipost-api-client-java/) and [.
 - Get Inbox: https://digipost.github.io/digipost-technical-docs/api-spec/inbox.md
 - Get Document: https://digipost.github.io/digipost-technical-docs/api-spec/get-document.md
 - Delete Document: https://digipost.github.io/digipost-technical-docs/api-spec/delete-document.md
-- Security / signing: https://digipost.github.io/digipost-technical-docs/API/security.md
+- Security / signing: https://digipost.github.io/digipost-technical-docs/api/security.md
 - HTTP headers: https://digipost.github.io/digipost-technical-docs/api-spec/header.md
 - Response codes: https://digipost.github.io/digipost-technical-docs/api-spec/response-codes.md
 - Data types & schema: https://digipost.github.io/digipost-technical-docs/data-types/index.md · https://digipost.github.io/digipost-technical-docs/api/schema.md

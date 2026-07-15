@@ -109,7 +109,7 @@ For error HTTP statuses at send time (400, 403, 404, …), see https://digipost.
 - Attachments: https://digipost.github.io/digipost-technical-docs/api-spec/attachment.md
 - Identify recipient: https://digipost.github.io/digipost-technical-docs/api-spec/identify.md
 - HTTP headers: https://digipost.github.io/digipost-technical-docs/api-spec/header.md
-- Security / signing: https://digipost.github.io/digipost-technical-docs/API/security.md
+- Security / signing: https://digipost.github.io/digipost-technical-docs/api/security.md
 - Response codes: https://digipost.github.io/digipost-technical-docs/api-spec/response-codes.md
 - Data types & schema: https://digipost.github.io/digipost-technical-docs/data-types/index.md · https://digipost.github.io/digipost-technical-docs/api/schema.md
 - Physical mail: https://digipost.github.io/digipost-technical-docs/physical-mail/index.md

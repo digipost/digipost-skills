@@ -50,7 +50,7 @@ A handful of facts recur in every flow — **sender id vs organisation number**,
 ## Canonical documentation
 
 - API overview: https://digipost.github.io/digipost-technical-docs/api/index.md
-- Security / signing: https://digipost.github.io/digipost-technical-docs/API/security.md
+- Security / signing: https://digipost.github.io/digipost-technical-docs/api/security.md
 - HTTP headers: https://digipost.github.io/digipost-technical-docs/api-spec/header.md
 - Test environment: https://digipost.github.io/digipost-technical-docs/process/test-environment.md
 - Data types & schema: https://digipost.github.io/digipost-technical-docs/data-types/index.md · https://digipost.github.io/digipost-technical-docs/api/schema.md

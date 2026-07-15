@@ -29,6 +29,6 @@ be confidently classified (e.g. an unrecognised sender), prefer flagging it for 
 ## Request signing for GET/DELETE
 
 Both requests have **no body**, a case the
-[security spec](https://digipost.github.io/digipost-technical-docs/API/security.md) covers explicitly: the
+[security spec](https://digipost.github.io/digipost-technical-docs/api/security.md) covers explicitly: the
 content-hash header is not used, and the spec's canonical-string examples include a request without a body. For the
 client-vs-hand-rolled decision and how to verify a signer, see the **digipost-auth-and-signing** skill.
