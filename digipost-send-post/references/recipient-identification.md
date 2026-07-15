@@ -32,8 +32,7 @@ defer there rather than guessing element names.
 `POST /identification` returns one of:
 
 - `DIGIPOST` — the person is a Digipost user (safe to send digital mail).
-- `IDENTIFIED` — the person was identified but is **not** a Digipost user. A returned `person-alias` can be reused in
-  later identification.
+- `IDENTIFIED` — the person was identified but is **not** a Digipost user.
 - `UNIDENTIFIED` — Digipost could not identify the person from the supplied information.
 - `INVALID` — The identifier itself was invalid (bad format / failed validation).
 

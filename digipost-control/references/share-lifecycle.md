@@ -35,8 +35,7 @@ API call. The one thing that makes it a Control request is a `share-documents-re
 Two fields shape the request:
 
 - **`purpose`** — a short free-text line, shown to the user as the consent prompt explaining *why* you need the
-  documentation. Keep it short: the fuller explanation belongs in the **covering letter** you attach. Write both as
-  if the recipient will read them, because they will — a vague ask undermines trust and reduces the chance they share.
+  documentation. Keep it short: the fuller explanation belongs in the **covering letter** you attach. 
 - **`max-share-duration-seconds`** — how long the share stays valid once granted (the example uses `1209600` = 14 days).
   Ask for what you actually need; a short window is better data-minimisation practice.
 
@@ -54,9 +53,7 @@ The response is the same `message-delivery` as any send — see the delivery res
 
 ## Step 3 — Discover that documents were shared
 
-Sharing happens asynchronously and on the user's initiative, so you **poll** for it. `GET /documents/events` returns
-events; carry the `X-Digipost-UserId` header (the **sender id**, as everywhere else — see
-the **digipost** entry skill's shared conventions, not the organisation number) and page through a time window:
+Sharing happens asynchronously and on the user's initiative, so you **poll** for it. `GET /documents/events` returns events where you can page through a time window:
 
 - Query params: `from` and `to` (ISO 8601 with timezone), plus `offset` and `maxResults` for paging.
 - The response is a `document-events` document with `event` elements. The event whose `type` is
@@ -111,11 +108,8 @@ there, and it keeps you resilient to path changes. Defer the exact element list 
 - **Fetch before `expiry-time`.** Access is time-boxed by the duration the user granted; a shared document is not a
   permanent copy. **When the duration expires, Digipost automatically closes the request** — the window is a hard
   ceiling you cannot extend.
-- **Validate the content type** before storing — don't assume PDF. Same discipline as any content download.
-- **(Optional) Use `stop_sharing` when you're done.** Ending the share early once you have what you need is good
-  data-minimisation and respects the user who granted access. Follow the `stop_sharing` link rather than deleting
-  anything. Note this only ever *shortens* the window — it ends the request before `expiry-time`; it cannot push the
-  expiry out.
+- **Validate the content type** before fetching the file, or serving it to the frontend — don't assume PDF. Same discipline as any content download.
+- **(Optional) Use `stop_sharing` when you're done.** If you don't need the shared document anymore, you can follow the `stop_sharing` link to end access before the `expiry-time`.
 
 ## Signing note
 

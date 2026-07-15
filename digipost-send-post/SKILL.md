@@ -4,9 +4,8 @@ description: >-
   Use when helping a developer send a document (digital mail / letter) to a
   recipient through the Digipost API. Covers the conceptual model of a
   "sending", how to identify a recipient, how to assemble the multipart send
-  request, the required security headers and request signing, and how to read
-  the delivery response and send-time errors. Defers exact field lists and schema to the
-  official Digipost technical documentation.
+  request, and how to read the delivery response and send-time errors. Defers 
+  exact field lists and schema to the official Digipost technical documentation.
 ---
 
 # Digipost — Send a Document
@@ -69,7 +68,7 @@ A document can carry an optional `sms-notification` element — a sibling of `au
 
 ### HTML documents
 
-`file-type` on a document is a free-form string field, not a fixed enum, so an HTML file is set the same way a PDF is — just with a different `file-type` value — subject to its own content/formatting restrictions. Without a client library, set this string directly in the document XML.
+`file-type` on a document is a free-form string field, not a fixed enum, so an HTML file is set the same way a PDF is — just with a different `file-type` value — subject to its own content/formatting restrictions. Without a client library, set this string directly in the document XML. One reason to prefer HTML: it renders inline in the Digipost web UI, whereas a PDF has to be opened separately.
 
 ### Invoice flow
 

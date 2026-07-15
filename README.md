@@ -67,7 +67,7 @@ These are standard Agent Skills, so the easiest path is the cross-agent installe
 (Claude Code, Codex, Cursor, Gemini CLI, OpenCode, and more):
 
 ```
-npx skills add <this-repo-url>
+npx skills add digipost/digipost-skills
 ```
 
 Or install manually by placing (or symlinking) the skill folders into a skills directory your agent scans:
