@@ -48,7 +48,7 @@ For senders you can coordinate with, agree that they set it when sending.
 ## On `authentication-level`
 
 The `authentication-level` on an inbox document is the level required when the document was originally sent to the
-organisation. Digipost enforces it when the document is accessed at digipost.no/bedrift, but not over the api. Which level your own
+organisation. Digipost enforces it when the document is accessed at digipost.no/bedrift, but not over the API. Which level your own
 retrieving system applies is up to you.
 
 ## Broker vs. on behalf of itself
