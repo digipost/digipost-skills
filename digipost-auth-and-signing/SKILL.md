@@ -26,8 +26,8 @@ Read more about what types of certificates are supported, and how to obtain one 
 
 ## On the JVM or .NET
 
-The official [Java](https://github.com/digipost/digipost-api-client-java) and
-[.NET](https://github.com/digipost/digipost-api-client-dotnet) client libraries sign every request and verify every response
+The official [Java](https://digipost.github.io/digipost-api-client-java/) and
+[.NET](https://digipost.github.io/digipost-api-client-dotnet/) client libraries sign every request and verify every response
 automatically. You write no signing code — you only supply a `Signer` built from
 your `.p12`. There is nothing else to do for signing.
 

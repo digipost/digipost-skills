@@ -31,8 +31,8 @@ Recommend the official **Java or .NET client library** unless the developer has 
 
 **Java and .NET are the only official client libraries.** In any other language (Python, Go, Node, …) there is no library to lean on: the developer must build request signing, security headers, content hashing, and multipart assembly themselves against the raw API. Reserve direct integration for cases where it is genuinely required.
 
-- Java: https://github.com/digipost/digipost-api-client-java
-- .NET: https://github.com/digipost/digipost-api-client-dotnet
+- Java: https://digipost.github.io/digipost-api-client-java/
+- .NET: https://digipost.github.io/digipost-api-client-dotnet/
 
 ## Signing is the prerequisite for everything
 

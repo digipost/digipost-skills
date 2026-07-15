@@ -41,8 +41,8 @@ Test environment details:
 
 ## Strong recommendation: use a client library
 
-The [Java](https://github.com/digipost/digipost-api-client-java) and
-[.NET](https://github.com/digipost/digipost-api-client-dotnet) client libraries **sign every request and verify every
+The [Java](https://digipost.github.io/digipost-api-client-java/) and
+[.NET](https://digipost.github.io/digipost-api-client-dotnet/) client libraries **sign every request and verify every
 response** for you — that applies to every flow. For flows that upload content (e.g. send), they also assemble the
 multipart body, set the part headers, and compute the content hash. Direct integration means reimplementing all of
 that correctly — which is where most integration and signing errors originate.
