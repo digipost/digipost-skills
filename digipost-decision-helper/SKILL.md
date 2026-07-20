@@ -1,3 +1,20 @@
+---
+name: digipost-decision-helper
+description: >-
+  Use when building a Digipost integration and you are about to settle a choice
+  the developer has not explicitly made — authentication or sensitivity level,
+  print fallback and its return address, share purpose and duration, retention
+  of fetched content, delete-after-retrieval, notifications, or anything that
+  adds cost, affects compliance, sends something real-world, or is irreversible.
+  Also use when unsure whether something the developer said already resolves a
+  question, or whether to ask, assume-and-announce, offer, or proceed silently.
+  The shared decision rubric for every Digipost flow skill (send, inbox,
+  Control, auth): two gates decide whether the developer must be involved, four
+  response modes decide how heavily, and per-flow catalogues in references/
+  list each decision point with its implication. Decisions the developer has
+  already made are sticky — never re-ask them.
+---
+
 # Decision points: when (and how) a Digipost skill involves the developer
 
 This is the shared rubric every Digipost flow skill routes to **by name**. It defines *when* an agent
@@ -94,3 +111,11 @@ Legend: 🔴 ask · 🟡 announce · 🔵 offer · 🟢 silent. **Resolved when*
 Implications are deliberately **qualitative** — "adds a charge", "subscription-gated" — because prices
 and terms change; current amounts live in the [price list](https://www.digipost.no/bedrift/priser).
 Field names below are the schema's own; defer exact values and structure to the linked docs.
+
+The catalogue is split per flow in this skill's `references/` folder — load the one(s) for the flow at hand:
+
+- [references/entry-helper.md](references/entry-helper.md) — the **digipost** entry scoping batch
+- [references/send-post-helper.md](references/send-post-helper.md) — **digipost-send-post**
+- [references/control-helper.md](references/control-helper.md) — **digipost-control** (the send leg inherits the whole send-post table)
+- [references/manage-inbox-helper.md](references/manage-inbox-helper.md) — **digipost-manage-inbox**
+- [references/auth-and-signing-helper.md](references/auth-and-signing-helper.md) — **digipost-auth-and-signing**
