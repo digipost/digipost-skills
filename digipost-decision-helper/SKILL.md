@@ -11,8 +11,10 @@ description: >-
   The shared decision rubric for every Digipost flow skill (send, inbox,
   Control, auth): two gates decide whether the developer must be involved, four
   response modes decide how heavily, and per-flow catalogues in references/
-  list each decision point with its implication. Decisions the developer has
-  already made are sticky — never re-ask them.
+  list each decision point with its implication. Also use to surface value-add
+  features the developer may not know to ask for — when the application context
+  makes one relevant, mentioning it once is required, not optional. Decisions the
+  developer has already made are sticky — never re-ask them.
 ---
 
 # Decision points: when (and how) a Digipost skill involves the developer
@@ -49,10 +51,22 @@ developer has already pinned down (gate 2 false) is simply used.
 | 🟢 **Silent default** | Trivial, reversible, one correct answer | *(no message — just proceed)* |
 | 🟡 **Assume & announce** | Reversible; a safe default exists; the developer should know | "I'll use X — tell me if that's not right" |
 | 🔴 **Ask before proceeding** | Material with no safe default: compliance, cost, irreversible, go-live | A real question; wait for the answer |
-| 🔵 **Offer once** | A value-add the developer may not know exists | One line; mention once, don't nag |
+| 🔵 **Offer once** | A value-add the developer likely doesn't know exists and would want if they did | One line, no wait — "once" limits *repetition*, not whether to raise it |
 
-**Lightweight default:** only 🔴 gates stop the agent. Everything else announces or offers and keeps
-moving. (Easy to tighten later if developers want more hand-holding.)
+**Lightweight default:** only 🔴 gates *block* — they wait for an answer. 🟡 and 🔵 never block, but
+never-block is not never-mention: a 🟡 still announces and a 🔵 still gets surfaced, in the same breath
+as you proceed. "Keeps moving" means don't wait, not stay silent.
+
+### Surface the 🔵 value-adds — don't let them slip
+
+🔵 offers are the rows models most often skip, yet they're where a developer gains the most: they
+can't ask for a feature they don't know exists. So when the application context makes a 🔵 item
+relevant — a billing surface implies structured `data-type` and in-Digipost payment; content that must
+be read implies unread-reminder notifications; inline rendering implies HTML — surfacing it once is
+**required, not discretionary**. The stronger the contextual fit, the less optional the mention. Before
+you treat a flow as settled, read its 🔵 rows against what the developer is building and raise every one
+that fits (batch them into one short list rather than dropping them). "Offer once" caps *repetition* —
+it never licenses staying silent the first time.
 
 ## Resolving a material decision: a fixed value *or* a configurable input
 
