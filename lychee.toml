@@ -1,0 +1,26 @@
+# Configuration for lychee, the link checker run by .github/workflows/link-check.yml
+# Docs: https://github.com/lycheeverse/lychee
+
+# Treat these HTTP status codes as success.
+#   2xx  — OK
+#   429  — rate limited; the link exists, the host is just throttling CI
+accept = ["200..=204", "429"]
+
+# Be forgiving with flaky external hosts before declaring a link dead.
+max_retries = 3
+retry_wait_time = 2   # seconds between retries
+timeout = 20          # seconds per request
+
+# Some servers reject the default bot user-agent; present a browser-like one.
+user_agent = "Mozilla/5.0 (compatible; lychee link checker; +https://github.com/lycheeverse/lychee)"
+
+# Note: fragment checking is off by default (no --include-fragments), so only
+# base URLs/paths are verified. That is intentional — GitHub #L line-anchors
+# don't exist in raw .md files and would cause false positives on relative links.
+
+# Skip URIs that are identifiers, not fetchable web pages:
+#   /schema/...     — XML namespace URIs used in xmlns="..."
+#   /relations/...  — Digipost API hypermedia link-relation identifiers
+exclude = [
+  '^https?://api\.digipost\.no/(schema|relations)/',
+]

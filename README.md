@@ -1,11 +1,11 @@
 # Digipost Skills
 
-A set of [Agent Skills](https://agentskills.io) that model the Digipost API as conceptual **flows**. Each skill gives an
+A set of [Agent Skills](https://agentskills.io/home) that model the Digipost API as conceptual **flows**. Each skill gives an
 AI agent the correct mental model and the shape of a flow, then defers exact fields, schema, and endpoints to the
 official [Digipost technical documentation](https://digipost.github.io/digipost-technical-docs/) (every page is also
 served as `.md` for easy ingestion).
 
-Skills follow the open [Agent Skills](https://agentskills.io) standard (`SKILL.md` with `name` + `description`
+Skills follow the open [Agent Skills](https://agentskills.io/home) standard (`SKILL.md` with `name` + `description`
 frontmatter), so they work in Claude Code, Codex CLI, Gemini CLI, Cursor, GitHub Copilot, OpenCode, and other
 skills-compatible agents — not just one tool.
 

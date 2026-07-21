@@ -1,0 +1,29 @@
+name: Link check
+
+# Verify that no links in the repo's markdown 404.
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+# A newer push to the same branch/PR cancels an in-flight run.
+concurrency:
+  group: link-check-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  link-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+
+      - name: Check links
+        # No args: uses the action default (all .md/.html/.rst, recursively) and
+        # auto-loads lychee.toml from the repo root for the exclude rules.
+        uses: lycheeverse/lychee-action@e7477775783ea5526144ba13e8db5eec57747ce8
+        with:
+          fail: true
