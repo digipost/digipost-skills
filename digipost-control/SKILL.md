@@ -75,7 +75,7 @@ For error HTTP statuses at send time (400, 403, 404, …), see https://digipost.
 - Send ShareDocumentsRequest: https://digipost.github.io/digipost-technical-docs/api-spec/control/send.md
 - Discover shared documents: https://digipost.github.io/digipost-technical-docs/api-spec/control/get-shared.md
 - Get state: https://digipost.github.io/digipost-technical-docs/api-spec/control/get-state.md
-- Data types & schema: https://digipost.github.io/digipost-technical-docs/data-types/index.md · https://digipost.github.io/digipost-technical-docs/api/schema.md
+- Data types & schema: https://digipost.github.io/digipost-technical-docs/d · https://digipost.github.io/digipost-technical-docs/api/schema.md
 - Security / signing: https://digipost.github.io/digipost-technical-docs/api/security.md
 - Response codes: https://digipost.github.io/digipost-technical-docs/api-spec/response-codes.md
 - Client libraries: [Java](https://digipost.github.io/digipost-api-client-java/) · [.NET](https://digipost.github.io/digipost-api-client-dotnet/)
