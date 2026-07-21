@@ -24,6 +24,19 @@ This assumes you already have your signing certificate (a PKCS#12 `.p12` file
 plus its password) and your Digipost sender id (the `X-Digipost-UserId` value).
 Read more about what types of certificates are supported, and how to obtain one here: https://digipost.github.io/digipost-technical-docs/api/certificate.md.
 
+## Keep the keystore out of the repo
+
+Your keystore (the certificate + private key, whatever its format — a `.p12`/`.pfx` bundle, a
+provider-issued file such as Buypass, or a platform keystore) and its password are production secrets —
+the whole basis of your identity to Digipost. This applies on every stack, library or hand-rolled:
+
+- **Gitignore the keystore file before adding it** (match whatever extension your provider issues), so
+  it can't be committed by accident; keep the password in a secret store or environment config, never
+  in source.
+- **A committed private key is a compromise, not a cleanup.** Deleting the file in a later commit
+  doesn't help — git history still holds it. Reissue/rotate the certificate (see the certificate docs
+  above) before going to production, rather than assuming a `git rm` made it safe.
+
 ## On the JVM or .NET
 
 The official [Java](https://digipost.github.io/digipost-api-client-java/) and

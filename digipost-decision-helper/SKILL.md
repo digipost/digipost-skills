@@ -19,10 +19,11 @@ description: >-
 
 # Decision points: when (and how) a Digipost skill involves the developer
 
-This is the shared rubric every Digipost flow skill routes to **by name**. It defines *when* an agent
-should stop and involve the developer, and *how heavily* — so beginners stay in control and informed
-of features they might want, while developers who already have a plan aren't asked things they've
-answered. Read it once; each flow skill carries only a short "Decision points" block that points here.
+This is the shared decision rubric for every Digipost flow. It defines *when* an agent should stop and
+involve the developer, and *how heavily* — so beginners stay in control and informed of features they
+might want, while developers who already have a plan aren't asked things they've answered. It applies
+whenever a material, unresolved choice comes up in any flow (send, inbox, Control, auth); read it once
+and apply it across the whole integration.
 
 Two framing facts shape everything below:
 
@@ -68,6 +69,13 @@ you treat a flow as settled, read its 🔵 rows against what the developer is bu
 that fits (batch them into one short list rather than dropping them). "Offer once" caps *repetition* —
 it never licenses staying silent the first time.
 
+**Let the business domain fire the offer.** The strongest relevance signal is the developer's own
+domain, captured in the entry scoping batch (see [references/entry-helper.md](references/entry-helper.md)).
+Infer likely structured `data-type`s from it — a *regnskapsbyrå* (accounting firm) implies invoices and
+payment reminders; an HR system implies employment documents — and make the offer proactively, rather
+than waiting for the developer to name a type they may not know Digipost supports. Infer to *offer*, not
+to hardcode: name the likely type and let them confirm.
+
 ## Resolving a material decision: a fixed value *or* a configurable input
 
 This is the part that matters for fields like `sensitivity-level` and `authentication-level`, where a
@@ -100,6 +108,25 @@ surface usually fixes the value; a general outbox usually exposes it.
 - **Sticky decisions** — never re-ask environment, stack, sender-id, broker role, certificate choice,
   or an already-resolved field within a session or a surface.
 - **Inform ≠ ask** — 🔵 offers are one line, never a gate.
+
+## Record resolved decisions in a DECISIONS file
+
+Sticky decisions need somewhere durable to live. As choices resolve, maintain a short **`DECISIONS.md`**
+at the root of the developer's integration repo — a running record of what was decided, so a later
+session (or a later you) doesn't re-ask, and so a contradiction shows up in a diff instead of staying
+buried in a chat transcript.
+
+- **One row per resolved decision:** the field or decision, the mode it was (🔴/🟡/🔵), the resolution
+  (a *fixed value*, or a *configurable input* and where it lives), and a one-line why.
+- **Write it as decisions land**, not only at the end; update the row in place if a decision changes.
+  A row that now contradicts an earlier state is exactly the drift you want visible — e.g. inbox
+  delete-after-retrieval flipping between automatic and manual.
+- **Read it first when resuming.** It is the source of truth for "already decided," ahead of
+  re-deriving from the conversation — this is what makes the *sticky decisions* lever above real.
+- Keep it qualitative and defer exact values and schema to the docs, exactly as the catalogue does.
+
+Creating or updating this file is the one thing these skills write into the developer's repo; everything
+else stays advisory. If there's no repo to write to (a one-off Q&A), keep the same record inline instead.
 
 ## How to phrase it
 
