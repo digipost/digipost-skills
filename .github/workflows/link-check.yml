@@ -1,0 +1,42 @@
+name: Link check
+
+# Verify that no links in the skill files 404.
+on:
+  pull_request:
+    paths:
+      - "**/*.md"
+      - "lychee.toml"
+      - ".github/workflows/link-check.yml"
+  push:
+    branches: [main]
+    paths:
+      - "**/*.md"
+      - "lychee.toml"
+      - ".github/workflows/link-check.yml"
+  workflow_dispatch: {}
+
+# A newer push to the same branch/PR cancels an in-flight run.
+concurrency:
+  group: link-check-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  link-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+
+      - name: Check links
+        uses: lycheeverse/lychee-action@e7477775783ea5526144ba13e8db5eec57747ce8
+        with:
+          # Scope: all skill folders + README; docs/ is intentionally excluded.
+          args: >-
+            --config lychee.toml
+            --no-progress
+            README.md
+            "digipost*/**/*.md"
+            "digipost*/*.md"
+          fail: true
