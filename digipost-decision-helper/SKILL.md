@@ -42,9 +42,6 @@ Two framing facts shape everything below:
 2. **Unresolved** — the developer hasn't already stated it, and it can't be safely inferred from their
    stated goal, their stack, their data, or the shape of their system.
 
-If either gate is false, don't ask. A field with one obvious answer (gate 1 false) or one the
-developer has already pinned down (gate 2 false) is simply used.
-
 ## Response modes — lightest touch first
 
 | Mode | Use when | How it reads |
@@ -58,23 +55,11 @@ developer has already pinned down (gate 2 false) is simply used.
 never-block is not never-mention: a 🟡 still announces and a 🔵 still gets surfaced, in the same breath
 as you proceed. "Keeps moving" means don't wait, not stay silent.
 
-### Surface the 🔵 value-adds — don't let them slip
+### Don't skip the 🔵 offers
 
-🔵 offers are the rows models most often skip, yet they're where a developer gains the most: they
-can't ask for a feature they don't know exists. So when the application context makes a 🔵 item
-relevant — a billing surface implies structured `data-type` and in-Digipost payment; content that must
-be read implies unread-reminder notifications; inline rendering implies HTML — surfacing it once is
-**required, not discretionary**. The stronger the contextual fit, the less optional the mention. Before
-you treat a flow as settled, read its 🔵 rows against what the developer is building and raise every one
-that fits (batch them into one short list rather than dropping them). "Offer once" caps *repetition* —
-it never licenses staying silent the first time.
-
-**Let the business domain fire the offer.** The strongest relevance signal is the developer's own
-domain, captured in the entry scoping batch (see [references/entry-helper.md](references/entry-helper.md)).
-Infer likely structured `data-type`s from it — a *regnskapsbyrå* (accounting firm) implies invoices and
-payment reminders; an HR system implies employment documents — and make the offer proactively, rather
-than waiting for the developer to name a type they may not know Digipost supports. Infer to *offer*, not
-to hardcode: name the likely type and let them confirm.
+Don't skip the offer. If the application context or business domain suggests a relevant Digipost
+capability, offer it once proactively. Infer likely features from the domain and let the developer
+confirm. "Offer once" limits repetition — it never means staying silent the first time.
 
 ## Resolving a material decision: a fixed value *or* a configurable input
 

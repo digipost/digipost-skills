@@ -30,12 +30,13 @@ Your keystore (the certificate + private key, whatever its format — a `.p12`/`
 provider-issued file such as Buypass, or a platform keystore) and its password are production secrets —
 the whole basis of your identity to Digipost. This applies on every stack, library or hand-rolled:
 
-- **Gitignore the keystore file before adding it** (match whatever extension your provider issues), so
-  it can't be committed by accident; keep the password in a secret store or environment config, never
-  in source.
-- **A committed private key is a compromise, not a cleanup.** Deleting the file in a later commit
-  doesn't help — git history still holds it. Reissue/rotate the certificate (see the certificate docs
-  above) before going to production, rather than assuming a `git rm` made it safe.
+- **Treat it as a secret.** Gitignore the keystore file before adding it (match whatever extension your
+  provider issues) so it can't be committed by accident, and keep the password in a secret store or
+  environment config, never in source.
+- **If it's ever exposed, rotate it.** A private key that has been committed — or leaked any other way —
+  must be treated as compromised; removing it afterwards doesn't undo the exposure (git history and any
+  existing clone still hold it). Reissue/rotate the certificate (see the certificate docs above) before
+  relying on it.
 
 ## On the JVM or .NET
 
