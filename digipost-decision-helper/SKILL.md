@@ -7,14 +7,15 @@ description: >-
   of fetched content, delete-after-retrieval, notifications, or anything that
   adds cost, affects compliance, sends something real-world, or is irreversible.
   Also use when unsure whether something the developer said already resolves a
-  question, or whether to ask, assume-and-announce, offer, or proceed silently.
-  The shared decision rubric for every Digipost flow skill (send, inbox,
+  question, or whether to ask, assume-and-announce, adopt-or-decline, or proceed
+  silently. The shared decision rubric for every Digipost flow skill (send, inbox,
   Control, auth): two gates decide whether the developer must be involved, four
   response modes decide how heavily, and per-flow catalogues in references/
   list each decision point with its implication. Also use to surface value-add
   features the developer may not know to ask for — when the application context
-  makes one relevant, mentioning it once is required, not optional. Decisions the
-  developer has already made are sticky — never re-ask them.
+  makes one relevant, raising it as an explicit choice the developer must answer
+  is required, not optional. Decisions the developer has already made are sticky —
+  never re-ask them.
 ---
 
 # Decision points: when (and how) a Digipost skill involves the developer
@@ -48,18 +49,36 @@ Two framing facts shape everything below:
 | --- | --- | --- |
 | 🟢 **Silent default** | Trivial, reversible, one correct answer | *(no message — just proceed)* |
 | 🟡 **Assume & announce** | Reversible; a safe default exists; the developer should know | "I'll use X — tell me if that's not right" |
-| 🔴 **Ask before proceeding** | Material with no safe default: compliance, cost, irreversible, go-live | A real question; wait for the answer |
-| 🔵 **Offer once** | A value-add the developer likely doesn't know exists and would want if they did | One line, no wait — "once" limits *repetition*, not whether to raise it |
+| 🔴 **Ask before proceeding** | Material with no safe default: compliance, cost, irreversible, go-live | "*Which* value?" — a real question; wait for the answer |
+| 🔵 **Adopt-or-decline** | A value-add the developer likely doesn't know exists and would want if they did | "*Do you want this?*" — a yes/no; wait for the answer |
 
-**Lightweight default:** only 🔴 gates *block* — they wait for an answer. 🟡 and 🔵 never block, but
-never-block is not never-mention: a 🟡 still announces and a 🔵 still gets surfaced, in the same breath
-as you proceed. "Keeps moving" means don't wait, not stay silent.
+**Two modes block, one doesn't.** Both 🔴 and 🔵 wait for the developer — they differ in *what* they
+wait for. A 🔴 waits on **which value**, because there is no safe default and guessing wrong costs
+money, breaks compliance, or can't be undone. A 🔵 waits on **whether to adopt** a capability: a safe
+default *does* exist (the feature stays off), so declining is always free — but silence is not a
+decline. Only 🟡 proceeds without waiting, and even a 🟡 still announces. Nothing is ever silently
+skipped.
 
-### Don't skip the 🔵 offers
+That is also the whole 🔴-vs-🔵 difference: **is there a safe way out?** 🔴 — no, you must land a correct
+value. 🔵 — yes, "no thanks" is always safe. That is why a 🔵 is *lower-stakes* than a 🔴 without being
+skippable: both must be answered; only 🔴 has no safe answer.
 
-Don't skip the offer. If the application context or business domain suggests a relevant Digipost
-capability, offer it once proactively. Infer likely features from the domain and let the developer
-confirm. "Offer once" limits repetition — it never means staying silent the first time.
+### Don't skip the 🔵 adopt-or-decline choices
+
+The failure mode we've actually observed is the model treating a 🔵 as optional and never raising it —
+so a developer silently misses a capability they'd have wanted. Guard against it three ways:
+
+- **Make them answer, don't just mention.** When the application context or business domain makes a 🔵
+  item relevant, present it as an explicit **yes/no the developer must answer before the flow is
+  settled**. "No" is safe and free — but you may not decide that "no" on their behalf by staying quiet.
+- **Batch them into one prompt.** Don't fire one interruption per 🔵. Read a flow's 🔵 rows against what
+  the developer is building, infer the likely fits from their domain (a *regnskapsbyrå* implies invoices
+  and payment reminders; an HR system implies employment documents), and raise them together as one
+  "here are the optional capabilities that fit — which do you want?" choice. Infer to *offer*, not to
+  hardcode: name the likely feature and let them confirm.
+- **Enforce it in `DECISIONS.md`.** Every relevant 🔵 must land as a row — *accepted* or *declined*. A
+  missing row means the flow isn't done, which turns "silently skipped" from invisible into a
+  detectable gap.
 
 ## Resolving a material decision: a fixed value *or* a configurable input
 
@@ -92,7 +111,8 @@ surface usually fixes the value; a general outbox usually exposes it.
   already decided.
 - **Sticky decisions** — never re-ask environment, stack, sender-id, broker role, certificate choice,
   or an already-resolved field within a session or a surface.
-- **Inform ≠ ask** — 🔵 offers are one line, never a gate.
+- **Batch the 🔵s** — collect every relevant adopt-or-decline into one prompt rather than one
+  interruption each, and record each as accepted or declined in `DECISIONS.md`.
 
 ## Record resolved decisions in a DECISIONS file
 
@@ -102,7 +122,9 @@ session (or a later you) doesn't re-ask, and so a contradiction shows up in a di
 buried in a chat transcript.
 
 - **One row per resolved decision:** the field or decision, the mode it was (🔴/🟡/🔵), the resolution
-  (a *fixed value*, or a *configurable input* and where it lives), and a one-line why.
+  (a *fixed value*, or a *configurable input* and where it lives — or, for a 🔵, *accepted* or
+  *declined*), and a one-line why. Every relevant 🔵 gets a row either way; a missing one means the flow
+  isn't done.
 - **Write it as decisions land**, not only at the end; update the row in place if a decision changes.
   A row that now contradicts an earlier state is exactly the drift you want visible — e.g. inbox
   delete-after-retrieval flipping between automatic and manual.
@@ -132,7 +154,7 @@ define, and defer exact values there.
 
 ## The decision-point catalogue
 
-Legend: 🔴 ask · 🟡 announce · 🔵 offer · 🟢 silent. **Resolved when** states what discharges the gate.
+Legend: 🔴 ask which value · 🟡 announce · 🔵 adopt-or-decline · 🟢 silent. **Resolved when** states what discharges the decision.
 
 Implications are deliberately **qualitative** — "adds a charge", "subscription-gated" — because prices
 and terms change; current amounts live in the [price list](https://www.digipost.no/bedrift/priser).
