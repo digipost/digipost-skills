@@ -22,6 +22,7 @@ This is the entry point for building an integration against the **Digipost API**
 | Read & manage the organisation's own inbox (list, download, delete received documents) | **digipost-manage-inbox** |
 | Request access to a document a user holds in Digipost (Digipost Control / ShareDocumentsRequest, e.g. *politiattest*) | **digipost-control** |
 | Sign requests, or debug a `403` / signature error | **digipost-auth-and-signing** |
+| Settle a choice they haven't explicitly made — and hear about relevant features they may not know to ask for (auth / sensitivity level, print fallback + return address, notifications, structured document types, share purpose / duration, retention, deletion) | **digipost-decision-helper** |
 
 Every flow sends signed requests, so **digipost-auth-and-signing** applies no matter which one you pick. *digipost-control* additionally builds on *digipost-send-post* — a Control request is an ordinary send.
 

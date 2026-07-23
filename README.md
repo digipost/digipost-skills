@@ -22,6 +22,14 @@ digipost-skills/
     references/conventions.md       ← sender-id vs org-number, broker rule, media type, test vs prod, client libs
   digipost-auth-and-signing/                 ← shared prerequisite: security headers, request signing, 403 diagnosis
     SKILL.md
+  digipost-decision-helper/         ← shared rubric: when & how heavily to involve the developer in a choice
+    SKILL.md
+    references/                     ← per-flow decision catalogues + the DECISIONS.md convention
+      entry-helper.md
+      send-post-helper.md
+      control-helper.md
+      manage-inbox-helper.md
+      auth-and-signing-helper.md
   digipost-send-post/               ← flow: send a document to a recipient
     SKILL.md
     references/
@@ -48,6 +56,11 @@ digipost-skills/
 - **digipost-auth-and-signing** — the shared prerequisite every flow depends on: security headers, request signing, response
   verification, and diagnosing a `403` / signature error. On the JVM or .NET the client library handles it; other
   languages hand-roll it against the spec and verify before trusting.
+- **digipost-decision-helper** — the shared decision rubric every flow uses. Two gates decide *whether* to involve the
+  developer in a choice they haven't made, four response modes (ask / announce / offer / silent) decide *how heavily*,
+  and per-flow catalogues in its `references/` list each decision point with its qualitative implication. Also surfaces
+  value-add features the developer may not know to ask for, and records resolved choices in a `DECISIONS.md` at the
+  integration repo's root so they stay sticky and drift is visible.
 - **digipost-send-post** — sending a document (digital mail / letter): the message/document model, recipient
   identification, multipart request assembly, and reading the delivery response.
 - **digipost-control** — using **Digipost Control** to request access to a document a user holds in Digipost

@@ -11,6 +11,13 @@ print and post**.
 If you are unsure whether a recipient is a Digipost user, you can check first with `POST /identification` —
 not required, even for physical post, but it can come in handy (see `recipient-identification.md`).
 
+**Anti-pattern — fall back on a *confirmed* non-user, not on an error.** "The recipient is not a
+Digipost user" and "the identification call failed" are two different outcomes. Only the first should
+trigger costly physical print. Routing to print because an identify call threw, timed out, or returned
+an unexpected status quietly turns a transient outage into real letters at several times the digital
+price — an expensive, hard-to-reverse default. Branch on a *confirmed* non-user result; handle
+errors on their own path (retry, alert, or fail closed), never by defaulting to print.
+
 Physical print means Digipost prints your document and sends it as ordinary mail to the recipient's postal address. This will only happen if the user is not a Digipost user.
 
 ## What stays the same vs. what changes
